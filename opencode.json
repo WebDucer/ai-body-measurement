@@ -11,5 +11,15 @@
       "url": "https://learn.microsoft.com/api/mcp",
       "enabled": true
     }
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "opencode/claude-sonnet-4-5"
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "opencode/claude-sonnet-4-5"
+    }
   }
 }
