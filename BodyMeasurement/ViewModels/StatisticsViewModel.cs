@@ -1,0 +1,127 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using BodyMeasurement.Models;
+using BodyMeasurement.Services;
+
+namespace BodyMeasurement.ViewModels;
+
+/// <summary>
+/// ViewModel for statistics page showing weight progress and trends
+/// </summary>
+public partial class StatisticsViewModel : ObservableObject
+{
+    private readonly IStatisticsService _statisticsService;
+    private readonly ISettingsService _settingsService;
+
+    [ObservableProperty]
+    private Statistics? _statistics;
+
+    [ObservableProperty]
+    private string _selectedPeriod = "All";
+
+    [ObservableProperty]
+    private bool _isLoading;
+
+    [ObservableProperty]
+    private bool _hasData;
+
+    [ObservableProperty]
+    private string _preferredUnit = "kg";
+
+    public StatisticsViewModel(
+        IStatisticsService statisticsService,
+        ISettingsService settingsService)
+    {
+        _statisticsService = statisticsService;
+        _settingsService = settingsService;
+
+        _preferredUnit = _settingsService.PreferredUnit;
+    }
+
+    /// <summary>
+    /// Loads statistics based on selected period
+    /// </summary>
+    [RelayCommand]
+    private async Task LoadStatisticsAsync()
+    {
+        try
+        {
+            IsLoading = true;
+
+            int? periodDays = SelectedPeriod switch
+            {
+                "7 Days" => 7,
+                "30 Days" => 30,
+                "90 Days" => 90,
+                "All" => null,
+                _ => null
+            };
+
+            Statistics = await _statisticsService.GetStatisticsAsync(periodDays);
+            HasData = Statistics?.TotalMeasurements > 0;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error loading statistics: {ex.Message}");
+            HasData = false;
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    /// <summary>
+    /// Changes the selected period and reloads statistics
+    /// </summary>
+    [RelayCommand]
+    private async Task ChangePeriodAsync(string period)
+    {
+        SelectedPeriod = period;
+        await LoadStatisticsAsync();
+    }
+
+    /// <summary>
+    /// Formats weight in the preferred unit
+    /// </summary>
+    public string FormatWeight(double? weightKg)
+    {
+        if (!weightKg.HasValue)
+            return "--";
+
+        return WeightConverter.Format(weightKg.Value, PreferredUnit);
+    }
+
+    /// <summary>
+    /// Formats weight change with sign and arrow
+    /// </summary>
+    public string FormatWeightChange(double? weightChangeKg, double? percentage)
+    {
+        if (!weightChangeKg.HasValue)
+            return "--";
+
+        var sign = weightChangeKg.Value >= 0 ? "+" : "";
+        var arrow = weightChangeKg.Value < 0 ? "↓" : weightChangeKg.Value > 0 ? "↑" : "";
+        
+        var formatted = WeightConverter.Format(Math.Abs(weightChangeKg.Value), PreferredUnit);
+        var percentageStr = percentage.HasValue ? $" ({sign}{percentage.Value:F1}%)" : "";
+        
+        return $"{sign}{formatted}{percentageStr} {arrow}";
+    }
+
+    /// <summary>
+    /// Gets trend text (gaining, losing, maintaining)
+    /// </summary>
+    public string GetTrendText()
+    {
+        if (Statistics?.WeightChangeKg == null)
+            return "No data";
+
+        if (Statistics.WeightChangeKg < -0.5)
+            return "Losing weight";
+        else if (Statistics.WeightChangeKg > 0.5)
+            return "Gaining weight";
+        else
+            return "Maintaining weight";
+    }
+}

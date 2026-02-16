@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:BodyMeasurement.ViewModels"
+             x:Class="BodyMeasurement.Views.StatisticsPage"
+             x:DataType="viewModels:StatisticsViewModel"
+             Title="Statistics">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <!-- Period Selector -->
+            <Border BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2C2C2C}"
+                   Padding="8">
+                <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Button Text="7 Days"
+                           Command="{Binding ChangePeriodCommand}"
+                           CommandParameter="7 Days"
+                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           CornerRadius="4"
+                           Padding="12,6" />
+                    <Button Text="30 Days"
+                           Command="{Binding ChangePeriodCommand}"
+                           CommandParameter="30 Days"
+                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           CornerRadius="4"
+                           Padding="12,6" />
+                    <Button Text="90 Days"
+                           Command="{Binding ChangePeriodCommand}"
+                           CommandParameter="90 Days"
+                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                           CornerRadius="4"
+                           Padding="12,6" />
+                    <Button Text="All"
+                           Command="{Binding ChangePeriodCommand}"
+                           CommandParameter="All"
+                           BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                           TextColor="White"
+                           CornerRadius="4"
+                           Padding="12,6" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- Statistics Cards -->
+            <VerticalStackLayout Spacing="16" IsVisible="{Binding HasData}">
+
+                <!-- Current Weight Card -->
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                       StrokeThickness="1"
+                       Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Current Weight"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        <Label FontSize="32"
+                               FontAttributes="Bold">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Statistics.CurrentWeightKg, StringFormat='{0:F1}'}" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding PreferredUnit}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Starting Weight Card -->
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                       StrokeThickness="1"
+                       Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Starting Weight"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        <Label FontSize="32"
+                               FontAttributes="Bold">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Statistics.StartingWeightKg, StringFormat='{0:F1}'}" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding PreferredUnit}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Weight Change Card -->
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                       StrokeThickness="1"
+                       Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Weight Change"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        <Label FontSize="32"
+                               FontAttributes="Bold">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Statistics.WeightChangeKg, StringFormat='{0:+0.0;-0.0;0}'}" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding PreferredUnit}" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding Statistics.WeightChangePercentage, StringFormat='({0:+0.0;-0.0;0}%)'}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Total Measurements Card -->
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                       StrokeThickness="1"
+                       Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Total Measurements"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        <Label Text="{Binding Statistics.TotalMeasurements}"
+                               FontSize="32"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Date Range Card -->
+                <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                       StrokeThickness="1"
+                       Padding="16">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                        <VerticalStackLayout Grid.Column="0" Spacing="8">
+                            <Label Text="First Measurement"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                            <Label Text="{Binding Statistics.FirstMeasurementDate, StringFormat='{0:MMM dd, yyyy}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="8">
+                            <Label Text="Last Measurement"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                            <Label Text="{Binding Statistics.LastMeasurementDate, StringFormat='{0:MMM dd, yyyy}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Empty State -->
+            <VerticalStackLayout IsVisible="{Binding HasData, Converter={StaticResource InvertedBoolConverter}}"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                Padding="32">
+                <Label Text="Not enough data for statistics."
+                       FontSize="16"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                <Label Text="Add more weight measurements to see your progress."
+                       FontSize="14"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                       Margin="0,8,0,0" />
+            </VerticalStackLayout>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                              IsVisible="{Binding IsLoading}"
+                              HorizontalOptions="Center"
+                              VerticalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

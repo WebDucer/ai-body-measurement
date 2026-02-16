@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BodyMeasurement.Views.OnboardingPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- Carousel View for onboarding screens -->
+        <CarouselView x:Name="OnboardingCarousel"
+                     Grid.Row="0"
+                     IndicatorView="indicatorView"
+                     Loop="False">
+            <CarouselView.ItemsSource>
+                <x:Array Type="{x:Type ContentView}">
+                    
+                    <!-- Screen 1: Welcome -->
+                    <ContentView>
+                        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
+                            <Label Text="👋"
+                                   FontSize="72"
+                                   HorizontalOptions="Center" />
+                            <Label Text="Welcome"
+                                   FontSize="32"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="Track your weight easily and privately with Body Measurement"
+                                   FontSize="16"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                    <!-- Screen 2: Features -->
+                    <ContentView>
+                        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
+                            <Label Text="✨"
+                                   FontSize="72"
+                                   HorizontalOptions="Center" />
+                            <Label Text="Features"
+                                   FontSize="32"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" />
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="📝 Record weight measurements"
+                                       FontSize="16"
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="📊 View charts and trends"
+                                       FontSize="16"
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="📈 Track your progress"
+                                       FontSize="16"
+                                       HorizontalTextAlignment="Center" />
+                                <Label Text="💾 Export your data"
+                                       FontSize="16"
+                                       HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                    <!-- Screen 3: Unit Selection -->
+                    <ContentView>
+                        <VerticalStackLayout Padding="32" Spacing="24" VerticalOptions="Center">
+                            <Label Text="⚖️"
+                                   FontSize="72"
+                                   HorizontalOptions="Center" />
+                            <Label Text="Choose Your Unit"
+                                   FontSize="32"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="Select your preferred weight unit"
+                                   FontSize="16"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                                   Margin="0,0,0,16" />
+                            
+                            <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                                <Button x:Name="BtnKg"
+                                       Text="Kilograms (kg)"
+                                       Clicked="OnKgSelected"
+                                       BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                                       TextColor="White"
+                                       WidthRequest="200" />
+                                <Button x:Name="BtnLbs"
+                                       Text="Pounds (lbs)"
+                                       Clicked="OnLbsSelected"
+                                       BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                                       TextColor="White"
+                                       WidthRequest="200" />
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </ContentView>
+
+                </x:Array>
+            </CarouselView.ItemsSource>
+        </CarouselView>
+
+        <!-- Bottom Navigation -->
+        <Grid Grid.Row="1" 
+              ColumnDefinitions="*,Auto,*"
+              Padding="16,8"
+              BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2C2C2C}">
+            
+            <!-- Skip Button -->
+            <Button Grid.Column="0"
+                   x:Name="BtnSkip"
+                   Text="Skip"
+                   Clicked="OnSkipClicked"
+                   BackgroundColor="Transparent"
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                   HorizontalOptions="Start" />
+
+            <!-- Indicator View -->
+            <IndicatorView x:Name="indicatorView"
+                          Grid.Column="1"
+                          IndicatorColor="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                          SelectedIndicatorColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center" />
+
+            <!-- Next/Done Button -->
+            <Button Grid.Column="2"
+                   x:Name="BtnNext"
+                   Text="Next"
+                   Clicked="OnNextClicked"
+                   BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                   TextColor="White"
+                   HorizontalOptions="End" />
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

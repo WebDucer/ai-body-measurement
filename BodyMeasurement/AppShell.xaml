@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BodyMeasurement.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:BodyMeasurement"
+    xmlns:views="clr-namespace:BodyMeasurement.Views"
+    Title="Body Measurement">
+
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            Icon="{FontImage Glyph='🏠', Size=24}"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="main" />
+
+        <ShellContent
+            Title="Chart"
+            Icon="{FontImage Glyph='📊', Size=24}"
+            ContentTemplate="{DataTemplate views:ChartPage}"
+            Route="chart" />
+
+        <ShellContent
+            Title="Statistics"
+            Icon="{FontImage Glyph='📈', Size=24}"
+            ContentTemplate="{DataTemplate views:StatisticsPage}"
+            Route="statistics" />
+
+        <ShellContent
+            Title="Settings"
+            Icon="{FontImage Glyph='⚙️', Size=24}"
+            ContentTemplate="{DataTemplate views:SettingsPage}"
+            Route="settings" />
+    </TabBar>
+
+</Shell>

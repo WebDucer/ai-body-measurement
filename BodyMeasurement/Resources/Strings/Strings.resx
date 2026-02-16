@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- App General -->
+  <data name="AppTitle" xml:space="preserve">
+    <value>Body Measurement</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Body Measurement</value>
+  </data>
+  
+  <!-- Navigation -->
+  <data name="TabHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="TabChart" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="TabStatistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="TabSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  
+  <!-- Main Page -->
+  <data name="MainPageTitle" xml:space="preserve">
+    <value>Weight Measurements</value>
+  </data>
+  <data name="AddWeightButton" xml:space="preserve">
+    <value>Add Weight</value>
+  </data>
+  <data name="EmptyStateMessage" xml:space="preserve">
+    <value>No measurements yet. Tap the button to add your first weight entry.</value>
+  </data>
+  
+  <!-- Add/Edit Weight Page -->
+  <data name="AddWeightTitle" xml:space="preserve">
+    <value>Add Weight</value>
+  </data>
+  <data name="EditWeightTitle" xml:space="preserve">
+    <value>Edit Weight</value>
+  </data>
+  <data name="WeightLabel" xml:space="preserve">
+    <value>Weight</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="NotesLabel" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NotesPlaceholder" xml:space="preserve">
+    <value>Optional notes...</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  
+  <!-- Statistics Page -->
+  <data name="StatisticsTitle" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="CurrentWeight" xml:space="preserve">
+    <value>Current Weight</value>
+  </data>
+  <data name="StartingWeight" xml:space="preserve">
+    <value>Starting Weight</value>
+  </data>
+  <data name="WeightChange" xml:space="preserve">
+    <value>Weight Change</value>
+  </data>
+  <data name="Period7Days" xml:space="preserve">
+    <value>7 Days</value>
+  </data>
+  <data name="Period30Days" xml:space="preserve">
+    <value>30 Days</value>
+  </data>
+  <data name="Period90Days" xml:space="preserve">
+    <value>90 Days</value>
+  </data>
+  <data name="PeriodAll" xml:space="preserve">
+    <value>All Time</value>
+  </data>
+  <data name="NoStatisticsData" xml:space="preserve">
+    <value>Not enough data for statistics. Add more weight measurements.</value>
+  </data>
+  
+  <!-- Chart Page -->
+  <data name="ChartTitle" xml:space="preserve">
+    <value>Weight Chart</value>
+  </data>
+  <data name="Filter1Week" xml:space="preserve">
+    <value>1 Week</value>
+  </data>
+  <data name="Filter1Month" xml:space="preserve">
+    <value>1 Month</value>
+  </data>
+  <data name="Filter3Months" xml:space="preserve">
+    <value>3 Months</value>
+  </data>
+  <data name="Filter6Months" xml:space="preserve">
+    <value>6 Months</value>
+  </data>
+  <data name="FilterAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="NoChartData" xml:space="preserve">
+    <value>No data to display. Add weight measurements to see your progress.</value>
+  </data>
+  
+  <!-- Settings Page -->
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageGerman" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="UnitLabel" xml:space="preserve">
+    <value>Weight Unit</value>
+  </data>
+  <data name="UnitKg" xml:space="preserve">
+    <value>Kilograms (kg)</value>
+  </data>
+  <data name="UnitLbs" xml:space="preserve">
+    <value>Pounds (lbs)</value>
+  </data>
+  
+  <!-- Export -->
+  <data name="ExportButton" xml:space="preserve">
+    <value>Export Data</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Export Data</value>
+  </data>
+  <data name="ExportFormatCSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="ExportFormatJSON" xml:space="preserve">
+    <value>JSON</value>
+  </data>
+  <data name="ExportSuccess" xml:space="preserve">
+    <value>Data exported successfully</value>
+  </data>
+  <data name="ExportError" xml:space="preserve">
+    <value>Failed to export data</value>
+  </data>
+  
+  <!-- Onboarding -->
+  <data name="OnboardingWelcomeTitle" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="OnboardingWelcomeMessage" xml:space="preserve">
+    <value>Track your weight easily and privately with Body Measurement</value>
+  </data>
+  <data name="OnboardingFeaturesTitle" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="OnboardingFeaturesMessage" xml:space="preserve">
+    <value>Record weight, view charts, track progress, and export your data</value>
+  </data>
+  <data name="OnboardingUnitTitle" xml:space="preserve">
+    <value>Choose Unit</value>
+  </data>
+  <data name="OnboardingUnitMessage" xml:space="preserve">
+    <value>Select your preferred weight unit</value>
+  </data>
+  <data name="OnboardingSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="OnboardingNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="OnboardingDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  
+  <!-- Validation Messages -->
+  <data name="ValidationWeightRequired" xml:space="preserve">
+    <value>Weight is required</value>
+  </data>
+  <data name="ValidationWeightPositive" xml:space="preserve">
+    <value>Weight must be greater than zero</value>
+  </data>
+  <data name="ValidationDateFuture" xml:space="preserve">
+    <value>Date cannot be in the future</value>
+  </data>
+  
+  <!-- Actions -->
+  <data name="DeleteButton" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EditButton" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this measurement?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  
+  <!-- CSV Export Headers -->
+  <data name="CSVHeaderDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="CSVHeaderWeightKg" xml:space="preserve">
+    <value>Weight (kg)</value>
+  </data>
+  <data name="CSVHeaderWeightLbs" xml:space="preserve">
+    <value>Weight (lbs)</value>
+  </data>
+  <data name="CSVHeaderNotes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+</root>

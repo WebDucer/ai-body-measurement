@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:BodyMeasurement.ViewModels"
+             x:Class="BodyMeasurement.Views.AddEditWeightPage"
+             x:DataType="viewModels:AddEditWeightViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="20">
+
+            <!-- Weight Input -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Weight"
+                       FontSize="16"
+                       FontAttributes="Bold" />
+                <HorizontalStackLayout Spacing="8">
+                    <Entry Placeholder="Enter weight"
+                           Text="{Binding Weight}"
+                           Keyboard="Numeric"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Center" />
+                    <Label Text="{Binding PreferredUnit}"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           Margin="8,0,0,0" />
+                </HorizontalStackLayout>
+                <Label Text="{Binding WeightError}"
+                       TextColor="Red"
+                       FontSize="12"
+                       IsVisible="{Binding WeightError, Converter={StaticResource IsNotNullOrEmptyConverter}}" />
+            </VerticalStackLayout>
+
+            <!-- Date Picker -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Date"
+                       FontSize="16"
+                       FontAttributes="Bold" />
+                <DatePicker Date="{Binding Date}"
+                           Format="D"
+                           HorizontalOptions="Start" />
+                <Label Text="{Binding DateError}"
+                       TextColor="Red"
+                       FontSize="12"
+                       IsVisible="{Binding DateError, Converter={StaticResource IsNotNullOrEmptyConverter}}" />
+            </VerticalStackLayout>
+
+            <!-- Notes Input -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Notes (Optional)"
+                       FontSize="16"
+                       FontAttributes="Bold" />
+                <Editor Text="{Binding Notes}"
+                       Placeholder="Add optional notes..."
+                       HeightRequest="100"
+                       AutoSize="TextChanges" />
+            </VerticalStackLayout>
+
+            <!-- Action Buttons -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,20,0,0">
+                <Button Grid.Column="0"
+                       Text="Cancel"
+                       Command="{Binding CancelCommand}"
+                       BackgroundColor="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" />
+                <Button Grid.Column="1"
+                       Text="Save"
+                       Command="{Binding SaveCommand}"
+                       BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                       TextColor="White" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

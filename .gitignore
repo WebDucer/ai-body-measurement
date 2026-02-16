@@ -1,0 +1,164 @@
+# .NET Core / .NET
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.DotSettings.user
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio
+.vs/
+.vscode/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Rider
+.idea/
+*.sln.iml
+
+# MonoDevelop
+*.pidb
+*.userprefs
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# MAUI Specific
+AppPackages/
+BundleArtifacts/
+*.appx
+*.appxbundle
+*.appxupload
+*.msix
+*.msixbundle
+*.msixupload
+
+# Android
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# iOS / Mac
+*.ipa
+*.dSYM.zip
+*.dSYM
+xcuserdata/
+*.xcworkspace/
+!default.xcworkspace/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+
+# SQLite databases (test databases)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*~
+
+# Resharper
+_ReSharper*/
+*.ReSharper
+*.DotSettings.user
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# Coverlet
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Rider
+.idea/
+*.sln.iml
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Local configuration
+appsettings.Development.json
+appsettings.local.json
+
+# Sensitive data
+*.key
+*.pfx
+*.p12
+secrets.json
+.env
+
+# OpenCode / OpenSpec
+.opencode/.cache/

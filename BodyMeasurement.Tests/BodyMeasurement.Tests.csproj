@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <!-- Link to source files from main project for testing -->
+  <ItemGroup>
+    <Compile Include="..\BodyMeasurement\Models\**\*.cs" Link="Models\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="..\BodyMeasurement\Services\IDatabaseService.cs" Link="Services\IDatabaseService.cs" />
+    <Compile Include="..\BodyMeasurement\Services\DatabaseService.cs" Link="Services\DatabaseService.cs" />
+    <Compile Include="..\BodyMeasurement\Services\ISettingsService.cs" Link="Services\ISettingsService.cs" />
+    <Compile Include="..\BodyMeasurement\Services\IStatisticsService.cs" Link="Services\IStatisticsService.cs" />
+    <Compile Include="..\BodyMeasurement\Services\StatisticsService.cs" Link="Services\StatisticsService.cs" />
+    <Compile Include="..\BodyMeasurement\Services\IExportService.cs" Link="Services\IExportService.cs" />
+    <!-- ViewModels linked for testing (excluding those that depend on MAUI navigation) -->
+    <!-- SettingsService.cs and ExportService.cs excluded because they depend on MAUI APIs -->
+    <!-- ViewModels excluded from direct linking due to MAUI dependencies (Shell, Application) -->
+  </ItemGroup>
+
+</Project>

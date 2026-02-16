@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:BodyMeasurement.ViewModels"
+             x:Class="BodyMeasurement.Views.SettingsPage"
+             x:DataType="viewModels:SettingsViewModel"
+             Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="24">
+
+            <!-- Language Setting -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                   Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                   StrokeThickness="1"
+                   Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Language"
+                           FontSize="16"
+                           FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="12">
+                        <RadioButton Content="English"
+                                    GroupName="Language"
+                                    IsChecked="{Binding SelectedLanguage, Converter={StaticResource StringEqualityConverter}, ConverterParameter=en}"
+                                    CheckedChanged="OnLanguageChanged"
+                                    Value="en" />
+                        <RadioButton Content="Deutsch"
+                                    GroupName="Language"
+                                    IsChecked="{Binding SelectedLanguage, Converter={StaticResource StringEqualityConverter}, ConverterParameter=de}"
+                                    CheckedChanged="OnLanguageChanged"
+                                    Value="de" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Unit Setting -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                   Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                   StrokeThickness="1"
+                   Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Weight Unit"
+                           FontSize="16"
+                           FontAttributes="Bold" />
+                    
+                    <HorizontalStackLayout Spacing="12">
+                        <RadioButton Content="Kilograms (kg)"
+                                    GroupName="Unit"
+                                    IsChecked="{Binding SelectedUnit, Converter={StaticResource StringEqualityConverter}, ConverterParameter=kg}"
+                                    CheckedChanged="OnUnitChanged"
+                                    Value="kg" />
+                        <RadioButton Content="Pounds (lbs)"
+                                    GroupName="Unit"
+                                    IsChecked="{Binding SelectedUnit, Converter={StaticResource StringEqualityConverter}, ConverterParameter=lbs}"
+                                    CheckedChanged="OnUnitChanged"
+                                    Value="lbs" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Export Section -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                   Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                   StrokeThickness="1"
+                   Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Export Data"
+                           FontSize="16"
+                           FontAttributes="Bold" />
+                    
+                    <Label Text="Export your weight measurements to share or backup"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,0">
+                        <Button Grid.Column="0"
+                               Text="Export CSV"
+                               Command="{Binding ExportCsvCommand}"
+                               BackgroundColor="{AppThemeBinding Light=#4CAF50, Dark=#388E3C}"
+                               TextColor="White"
+                               IsEnabled="{Binding IsExporting, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Button Grid.Column="1"
+                               Text="Export JSON"
+                               Command="{Binding ExportJsonCommand}"
+                               BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                               TextColor="White"
+                               IsEnabled="{Binding IsExporting, Converter={StaticResource InvertedBoolConverter}}" />
+                    </Grid>
+
+                    <ActivityIndicator IsRunning="{Binding IsExporting}"
+                                      IsVisible="{Binding IsExporting}"
+                                      HorizontalOptions="Center"
+                                      Margin="0,8,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- App Info -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                   Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                   StrokeThickness="1"
+                   Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Body Measurement"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+                    <Label Text="Version 1.0.0"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
