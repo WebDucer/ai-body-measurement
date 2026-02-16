@@ -13,6 +13,10 @@ public partial class App : Application
 		InitializeComponent();
 		_serviceProvider = serviceProvider;
 
+		// Initialize localization
+		var localizationService = serviceProvider.GetRequiredService<ILocalizationService>();
+		// The service constructor already sets the language based on preferences
+
 		// Initialize database on app startup
 		var databaseService = serviceProvider.GetRequiredService<IDatabaseService>();
 		_ = databaseService.InitializeAsync();

@@ -33,6 +33,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ISettingsService, SettingsService>();
 		builder.Services.AddSingleton<IStatisticsService, StatisticsService>();
 		builder.Services.AddSingleton<IExportService, ExportService>();
+		builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
 		// Register ViewModels
 		builder.Services.AddTransient<MainViewModel>();

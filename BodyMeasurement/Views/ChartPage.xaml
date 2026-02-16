@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:BodyMeasurement.ViewModels"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:resources="clr-namespace:BodyMeasurement.Resources.Strings"
              x:Class="BodyMeasurement.Views.ChartPage"
              x:DataType="viewModels:ChartViewModel"
-             Title="Weight Chart">
+             Title="{x:Static resources:Strings.ChartPageTitle}">
 
     <Grid RowDefinitions="Auto,*">
 
@@ -62,7 +63,8 @@
         <Grid Grid.Row="1" Padding="16">
 
             <!-- Chart -->
-            <chart:SfCartesianChart IsVisible="{Binding HasData}">
+            <chart:SfCartesianChart IsVisible="{Binding HasData}"
+                                   IsEnabled="{Binding HasData}">
                 
                 <chart:SfCartesianChart.XAxes>
                     <chart:DateTimeAxis 
@@ -83,7 +85,8 @@
                                  YBindingPath="WeightKg"
                                  Fill="#2196F3"
                                  ShowDataLabels="False"
-                                 EnableAnimation="True">
+                                 EnableAnimation="False"
+                                 EnableTooltip="True">
                     <chart:LineSeries.MarkerSettings>
                         <chart:ChartMarkerSettings Type="Circle"
                                                   Fill="#2196F3"

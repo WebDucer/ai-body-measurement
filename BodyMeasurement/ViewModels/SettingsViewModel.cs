@@ -12,6 +12,7 @@ public partial class SettingsViewModel : ObservableObject
     private readonly ISettingsService _settingsService;
     private readonly IExportService _exportService;
     private readonly IDatabaseService _databaseService;
+    private readonly ILocalizationService _localizationService;
 
     [ObservableProperty]
     private string _selectedLanguage;
@@ -25,11 +26,13 @@ public partial class SettingsViewModel : ObservableObject
     public SettingsViewModel(
         ISettingsService settingsService,
         IExportService exportService,
-        IDatabaseService databaseService)
+        IDatabaseService databaseService,
+        ILocalizationService localizationService)
     {
         _settingsService = settingsService;
         _exportService = exportService;
         _databaseService = databaseService;
+        _localizationService = localizationService;
 
         // Load current settings
         _selectedLanguage = _settingsService.Language;
@@ -41,8 +44,32 @@ public partial class SettingsViewModel : ObservableObject
     /// </summary>
     partial void OnSelectedLanguageChanged(string value)
     {
-        _settingsService.Language = value;
-        // In a real app, this would trigger UI refresh with new language
+        if (string.IsNullOrEmpty(value) || value == _localizationService.CurrentLanguage)
+            return;
+
+        // Update the localization service which will change the culture
+        _localizationService.SetLanguage(value);
+        
+        // Show message and restart the app to apply changes
+        Application.Current?.Dispatcher.Dispatch(async () =>
+        {
+            bool shouldRestart = await Application.Current.MainPage!.DisplayAlert(
+                "Language Changed",
+                "The app needs to restart to apply the language change. Restart now?",
+                "Yes",
+                "No");
+            
+            if (shouldRestart)
+            {
+                // Restart the app by recreating the main window
+                var window = Application.Current.Windows.FirstOrDefault();
+                if (window != null)
+                {
+                    // Close current window and create new one
+                    window.Page = new AppShell();
+                }
+            }
+        });
     }
 
     /// <summary>

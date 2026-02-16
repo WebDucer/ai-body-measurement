@@ -57,6 +57,13 @@ public partial class ChartViewModel : ObservableObject
         try
         {
             IsLoading = true;
+            
+            // Clear chart data first to prevent rendering issues
+            HasData = false;
+            ChartData.Clear();
+            
+            // Small delay to ensure chart stops rendering
+            await Task.Delay(50);
 
             var endDate = DateTime.Today;
             var startDate = SelectedFilter switch
@@ -82,32 +89,36 @@ public partial class ChartViewModel : ObservableObject
             // Sort by date ascending for chart display
             entries = entries.OrderBy(e => e.Date).ToList();
 
-            ChartData.Clear();
-            foreach (var entry in entries)
+            // Only proceed if we have data
+            if (entries.Count > 0)
             {
-                ChartData.Add(entry);
-            }
-
-            HasData = ChartData.Count > 0;
-
-            // Calculate stats
-            if (HasData)
-            {
-                MinWeight = ChartData.Min(e => e.WeightKg);
-                MaxWeight = ChartData.Max(e => e.WeightKg);
-                AverageWeight = ChartData.Average(e => e.WeightKg);
+                // Calculate stats first
+                MinWeight = entries.Min(e => e.WeightKg);
+                MaxWeight = entries.Max(e => e.WeightKg);
+                AverageWeight = entries.Average(e => e.WeightKg);
+                
+                // Add all entries at once using a new collection to avoid multiple updates
+                var newData = new ObservableCollection<WeightEntry>(entries);
+                ChartData = newData;
+                
+                // Small delay before showing chart
+                await Task.Delay(50);
+                HasData = true;
             }
             else
             {
                 MinWeight = null;
                 MaxWeight = null;
                 AverageWeight = null;
+                HasData = false;
             }
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error loading chart data: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
             HasData = false;
+            ChartData.Clear();
         }
         finally
         {

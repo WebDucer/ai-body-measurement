@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:BodyMeasurement.ViewModels"
+             xmlns:resources="clr-namespace:BodyMeasurement.Resources.Strings"
              x:Class="BodyMeasurement.Views.MainPage"
              x:DataType="viewModels:MainViewModel"
-             Title="Weight Measurements">
+             Title="{x:Static resources:Strings.MainPageTitle}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add"
+        <ToolbarItem Text="{x:Static resources:Strings.AddWeightButton}"
                      Command="{Binding NavigateToAddWeightCommand}"
                      IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />
     </ContentPage.ToolbarItems>
@@ -23,7 +24,7 @@
                 
                 <!-- Current Weight -->
                 <VerticalStackLayout Grid.Column="0">
-                    <Label Text="Current"
+                    <Label Text="{x:Static resources:Strings.CurrentWeight}"
                            FontSize="12"
                            TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
                            HorizontalOptions="Center" />
@@ -41,7 +42,7 @@
 
                 <!-- Starting Weight -->
                 <VerticalStackLayout Grid.Column="1">
-                    <Label Text="Starting"
+                    <Label Text="{x:Static resources:Strings.StartingWeight}"
                            FontSize="12"
                            TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
                            HorizontalOptions="Center" />
@@ -59,7 +60,7 @@
 
                 <!-- Weight Change -->
                 <VerticalStackLayout Grid.Column="2">
-                    <Label Text="Change"
+                    <Label Text="{x:Static resources:Strings.WeightChange}"
                            FontSize="12"
                            TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
                            HorizontalOptions="Center" />
@@ -140,6 +141,22 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
+        
+        <!-- Floating Action Button -->
+        <Button Grid.Row="1"
+                Text="+"
+                FontSize="32"
+                Command="{Binding NavigateToAddWeightCommand}"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="30"
+                BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                TextColor="White"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,20,20"
+                Shadow="{Shadow Brush=Black, Opacity=0.3, Radius=8, Offset='0,4'}">
+        </Button>
     </Grid>
 
 </ContentPage>

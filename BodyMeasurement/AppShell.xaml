@@ -5,29 +5,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BodyMeasurement"
     xmlns:views="clr-namespace:BodyMeasurement.Views"
-    Title="Body Measurement">
+    xmlns:resources="clr-namespace:BodyMeasurement.Resources.Strings"
+    Title="{x:Static resources:Strings.AppTitle}">
 
     <TabBar>
         <ShellContent
-            Title="Home"
+            Title="{x:Static resources:Strings.TabHome}"
             Icon="{FontImage Glyph='🏠', Size=24}"
             ContentTemplate="{DataTemplate views:MainPage}"
             Route="main" />
 
         <ShellContent
-            Title="Chart"
+            Title="{x:Static resources:Strings.TabChart}"
             Icon="{FontImage Glyph='📊', Size=24}"
             ContentTemplate="{DataTemplate views:ChartPage}"
             Route="chart" />
 
         <ShellContent
-            Title="Statistics"
+            Title="{x:Static resources:Strings.TabStatistics}"
             Icon="{FontImage Glyph='📈', Size=24}"
             ContentTemplate="{DataTemplate views:StatisticsPage}"
             Route="statistics" />
 
         <ShellContent
-            Title="Settings"
+            Title="{x:Static resources:Strings.TabSettings}"
             Icon="{FontImage Glyph='⚙️', Size=24}"
             ContentTemplate="{DataTemplate views:SettingsPage}"
             Route="settings" />
