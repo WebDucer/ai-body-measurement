@@ -63,10 +63,10 @@ public class ShellNavigationService : INavigationService
     public Task GoBackAsync() => Shell.Current.GoToAsync("..");
 
     public Task<bool> ShowConfirmationAsync(string title, string message, string accept, string cancel) =>
-        Application.Current!.MainPage!.DisplayAlert(title, message, accept, cancel);
+        Application.Current!.Windows[0].Page!.DisplayAlertAsync(title, message, accept, cancel);
 
     public Task ShowAlertAsync(string title, string message, string cancel) =>
-        Application.Current!.MainPage!.DisplayAlert(title, message, cancel);
+        Application.Current!.Windows[0].Page!.DisplayAlertAsync(title, message, cancel);
 }
 ```
 
@@ -312,6 +312,8 @@ Das Paket ist in `BodyMeasurement.csproj` referenziert, wird aber nicht genutzt.
 ---
 
 ### D11: Hard-codierte Strings lokalisieren
+
+Zugriff in ViewModels erfolgt direkt über die MSBuild-generierte `Strings`-Klasse (typsicher, compile-time-geprüft): `Strings.ConfirmDeleteTitle`, `Strings.Yes` etc. — kein `ILocalizationService.GetString(string)` im Code. `ILocalizationService` verwaltet ausschließlich die Sprachumschaltung (`SetLanguage` / `CurrentLanguage`).
 
 Folgende Strings in ViewModels und XAML-Views sind noch nicht in `Strings.resx` / `Strings.de.resx`:
 

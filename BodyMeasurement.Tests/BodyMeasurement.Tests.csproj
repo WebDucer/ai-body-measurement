@@ -28,9 +28,5 @@
     <ProjectReference Include="..\BodyMeasurement\BodyMeasurement.csproj" />
   </ItemGroup>
 
-  <!-- Exclude test files that test MAUI-specific classes not available in net10.0 without MAUI workload -->
-  <ItemGroup>
-    <Compile Remove="Extensions\ServiceCollectionExtensionsTests.cs" />
-  </ItemGroup>
 
 </Project>

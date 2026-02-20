@@ -46,7 +46,7 @@ The system SHALL localize all user-visible text including labels, buttons, messa
 ## ADDED Requirements
 
 ### Requirement: Microsoft.Extensions.Localization package is not used
-The system SHALL NOT reference the `Microsoft.Extensions.Localization` NuGet package. Localization is implemented entirely via `.resx` resource files and the custom `ILocalizationService` backed by `System.Resources.ResourceManager`.
+The system SHALL NOT reference the `Microsoft.Extensions.Localization` NuGet package. Localization is implemented entirely via `.resx` resource files. The MSBuild `GenerateResource` task generates a strongly-typed `Strings` class (backed by `System.Resources.ResourceManager`) at build time. ViewModels access localized strings directly via `Strings.<PropertyName>` (compile-time type-safe). `ILocalizationService` is responsible for language switching (`SetLanguage`) and culture state management only.
 
 #### Scenario: Package absent from project file
 - **WHEN** inspecting `BodyMeasurement.csproj`

@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.ViewModels;
@@ -9,12 +10,11 @@ namespace BodyMeasurement.ViewModels;
 /// <summary>
 /// ViewModel for adding or editing weight measurements
 /// </summary>
-public partial class AddEditWeightViewModel : ObservableObject
+public partial class AddEditWeightViewModel : ObservableObject, IQueryAttributable
 {
     private readonly IDatabaseService _databaseService;
     private readonly ISettingsService _settingsService;
     private readonly INavigationService _navigationService;
-    private readonly ILocalizationService _localizationService;
     private readonly ILogger<AddEditWeightViewModel> _logger;
 
     [ObservableProperty]
@@ -47,13 +47,11 @@ public partial class AddEditWeightViewModel : ObservableObject
         IDatabaseService databaseService,
         ISettingsService settingsService,
         INavigationService navigationService,
-        ILocalizationService localizationService,
         ILogger<AddEditWeightViewModel> logger)
     {
         _databaseService = databaseService;
         _settingsService = settingsService;
         _navigationService = navigationService;
-        _localizationService = localizationService;
         _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
@@ -68,14 +66,14 @@ public partial class AddEditWeightViewModel : ObservableObject
         {
             _editId = id;
             IsEditMode = true;
-            Title = _localizationService.GetString("EditWeightTitle");
+            Title = Strings.EditWeightTitle;
             _ = LoadWeightEntryAsync(id);
         }
         else
         {
             _editId = null;
             IsEditMode = false;
-            Title = _localizationService.GetString("AddWeightTitle");
+            Title = Strings.AddWeightTitle;
             Weight = 0;
             Date = DateTime.Today;
             Notes = null;
@@ -122,7 +120,7 @@ public partial class AddEditWeightViewModel : ObservableObject
         // Validate weight
         if (Weight <= 0)
         {
-            WeightError = _localizationService.GetString("ValidationWeightPositive");
+            WeightError = Strings.ValidationWeightPositive;
             isValid = false;
         }
         else
@@ -133,7 +131,7 @@ public partial class AddEditWeightViewModel : ObservableObject
         // Validate date
         if (Date > DateTime.Today)
         {
-            DateError = _localizationService.GetString("ValidationDateNotFuture");
+            DateError = Strings.ValidationDateNotFuture;
             isValid = false;
         }
         else
@@ -194,9 +192,9 @@ public partial class AddEditWeightViewModel : ObservableObject
         {
             _logger.LogError(ex, "Error saving weight entry");
             await _navigationService.ShowAlertAsync(
-                _localizationService.GetString("ErrorTitle"),
-                _localizationService.GetString("ErrorSaveMeasurement"),
-                "OK");
+                Strings.ErrorTitle,
+                Strings.ErrorSaveMeasurement,
+                Strings.Ok);
         }
     }
 

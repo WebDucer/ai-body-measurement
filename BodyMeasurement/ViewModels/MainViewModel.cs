@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.ViewModels;
@@ -16,7 +17,6 @@ public partial class MainViewModel : ObservableObject
     private readonly IStatisticsService _statisticsService;
     private readonly ISettingsService _settingsService;
     private readonly INavigationService _navigationService;
-    private readonly ILocalizationService _localizationService;
     private readonly ILogger<MainViewModel> _logger;
 
     [ObservableProperty]
@@ -48,14 +48,12 @@ public partial class MainViewModel : ObservableObject
         IStatisticsService statisticsService,
         ISettingsService settingsService,
         INavigationService navigationService,
-        ILocalizationService localizationService,
         ILogger<MainViewModel> logger)
     {
         _databaseService = databaseService;
         _statisticsService = statisticsService;
         _settingsService = settingsService;
         _navigationService = navigationService;
-        _localizationService = localizationService;
         _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
@@ -115,10 +113,10 @@ public partial class MainViewModel : ObservableObject
         try
         {
             var result = await _navigationService.ShowConfirmationAsync(
-                _localizationService.GetString("ConfirmDeleteTitle"),
-                _localizationService.GetString("ConfirmDeleteMessage"),
-                _localizationService.GetString("Yes"),
-                _localizationService.GetString("No"));
+                Strings.ConfirmDeleteTitle,
+                Strings.ConfirmDeleteMessage,
+                Strings.Yes,
+                Strings.No);
 
             if (!result)
                 return;
@@ -130,9 +128,9 @@ public partial class MainViewModel : ObservableObject
         {
             _logger.LogError(ex, "Error deleting weight entry");
             await _navigationService.ShowAlertAsync(
-                _localizationService.GetString("ErrorTitle"),
-                _localizationService.GetString("ErrorDeleteMeasurement"),
-                "OK");
+                Strings.ErrorTitle,
+                Strings.ErrorDeleteMeasurement,
+                Strings.Ok);
         }
     }
 

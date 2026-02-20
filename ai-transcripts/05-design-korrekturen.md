@@ -1,11 +1,3 @@
-# New session - 2026-02-19T17:15:58.942Z
-
-**Session ID:** ses_3891943a2ffek1nqLa3p87xn7C
-**Created:** 2/19/2026, 6:15:58 PM
-**Updated:** 2/19/2026, 7:16:57 PM
-
----
-
 ## User
 
 /opsx:new Korrekturen im Design und Fehlerbehebung
@@ -6574,7 +6566,10 @@ Copy
 ```
 **This command is intended to be used within the Package Manager Console in Visual Studio, as it uses the NuGet module's version of[Install-Package].
 ```
-&lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;3.1.5&quot;&gt;&lt;PrivateAssets&gt;all&lt;/PrivateAssets&gt;&lt;IncludeAssets&gt;runtime; build; native; contentfiles; analyzers&lt;/IncludeAssets&gt;&lt;/PackageReference&gt;
+&lt;PackageReference Include=&quot;xunit.runner.visualstudio&quot; Version=&quot;3.1.5&quot;&gt;
+&lt;PrivateAssets&gt;all&lt;/PrivateAssets&gt;
+&lt;IncludeAssets&gt;runtime; build; native; contentfiles; analyzers&lt;/IncludeAssets&gt;
+&lt;/PackageReference&gt;
 Copy
 ```
 **For projects that support[PackageReference

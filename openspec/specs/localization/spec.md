@@ -44,7 +44,7 @@ The system SHALL automatically set the app language based on device system langu
 - **THEN** app defaults to English language
 
 ### Requirement: All user-facing text is localized
-The system SHALL localize all user-visible text including labels, buttons, messages, and placeholders.
+The system SHALL localize all user-visible text including labels, buttons, messages, and placeholders. This requirement is extended to include all previously hard-coded strings in ViewModels and Views that were not yet covered by localization.
 
 #### Scenario: Navigation labels localized
 - **WHEN** viewing navigation menu
@@ -69,6 +69,22 @@ The system SHALL localize all user-visible text including labels, buttons, messa
 #### Scenario: Empty state messages localized
 - **WHEN** viewing empty lists or charts
 - **THEN** empty state messages display in selected language
+
+#### Scenario: Confirmation dialog text localized
+- **WHEN** a confirmation dialog is shown (e.g., delete, language change)
+- **THEN** title and message text display in the selected language
+
+#### Scenario: Alert dialog text localized
+- **WHEN** an alert dialog is shown (e.g., export success, save error)
+- **THEN** title and message text display in the selected language
+
+#### Scenario: Add and edit screen titles localized
+- **WHEN** user opens the add measurement screen
+- **THEN** page title displays in the selected language
+
+#### Scenario: Validation error messages localized
+- **WHEN** user submits invalid weight or future date
+- **THEN** validation messages display in the selected language
 
 ### Requirement: Date and number formatting respects locale
 The system SHALL format dates and numbers according to the selected language's locale conventions.
@@ -158,3 +174,14 @@ The system SHALL handle missing translations without crashing or displaying keys
 #### Scenario: Partial translation coverage
 - **WHEN** some strings lack translations
 - **THEN** app displays available translations and falls back to English for missing ones
+
+### Requirement: Microsoft.Extensions.Localization package is not used
+The system SHALL NOT reference the `Microsoft.Extensions.Localization` NuGet package. Localization is implemented entirely via `.resx` resource files. The MSBuild `GenerateResource` task generates a strongly-typed `Strings` class (backed by `System.Resources.ResourceManager`) at build time. ViewModels access localized strings directly via `Strings.<PropertyName>` (compile-time type-safe). `ILocalizationService` is responsible for language switching (`SetLanguage`) and culture state management only.
+
+#### Scenario: Package absent from project file
+- **WHEN** inspecting `BodyMeasurement.csproj`
+- **THEN** no `<PackageReference>` for `Microsoft.Extensions.Localization` is present
+
+#### Scenario: Localization works without the package
+- **WHEN** the app runs without `Microsoft.Extensions.Localization`
+- **THEN** all UI strings resolve correctly in both English and German

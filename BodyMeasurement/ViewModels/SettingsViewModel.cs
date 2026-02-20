@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.ViewModels;
@@ -63,10 +64,10 @@ public partial class SettingsViewModel : ObservableObject
         Application.Current?.Dispatcher.Dispatch(async () =>
         {
             bool shouldRestart = await Application.Current.Windows[0].Page!.DisplayAlertAsync(
-                "Language Changed",
-                "The app needs to restart to apply the language change. Restart now?",
-                "Yes",
-                "No");
+                Strings.LanguageChangedTitle,
+                Strings.LanguageChangedMessage,
+                Strings.Yes,
+                Strings.No);
 
             if (shouldRestart)
             {
@@ -103,9 +104,9 @@ public partial class SettingsViewModel : ObservableObject
             if (entries.Count == 0)
             {
                 await _navigationService.ShowAlertAsync(
-                    _localizationService.GetString("NoDataTitle"),
-                    _localizationService.GetString("NoDataExportMessage"),
-                    "OK");
+                    Strings.NoDataTitle,
+                    Strings.NoDataExportMessage,
+                    Strings.Ok);
                 return;
             }
 
@@ -115,18 +116,18 @@ public partial class SettingsViewModel : ObservableObject
             if (shared)
             {
                 await _navigationService.ShowAlertAsync(
-                    _localizationService.GetString("ExportSuccessTitle"),
-                    _localizationService.GetString("ExportSuccessMessage"),
-                    "OK");
+                    Strings.ExportSuccessTitle,
+                    Strings.ExportSuccessMessage,
+                    Strings.Ok);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error exporting CSV");
             await _navigationService.ShowAlertAsync(
-                _localizationService.GetString("ErrorTitle"),
-                _localizationService.GetString("ErrorExportData"),
-                "OK");
+                Strings.ErrorTitle,
+                Strings.ErrorExportData,
+                Strings.Ok);
         }
         finally
         {
@@ -149,9 +150,9 @@ public partial class SettingsViewModel : ObservableObject
             if (entries.Count == 0)
             {
                 await _navigationService.ShowAlertAsync(
-                    _localizationService.GetString("NoDataTitle"),
-                    _localizationService.GetString("NoDataExportMessage"),
-                    "OK");
+                    Strings.NoDataTitle,
+                    Strings.NoDataExportMessage,
+                    Strings.Ok);
                 return;
             }
 
@@ -161,18 +162,18 @@ public partial class SettingsViewModel : ObservableObject
             if (shared)
             {
                 await _navigationService.ShowAlertAsync(
-                    _localizationService.GetString("ExportSuccessTitle"),
-                    _localizationService.GetString("ExportSuccessMessage"),
-                    "OK");
+                    Strings.ExportSuccessTitle,
+                    Strings.ExportSuccessMessage,
+                    Strings.Ok);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error exporting JSON");
             await _navigationService.ShowAlertAsync(
-                _localizationService.GetString("ErrorTitle"),
-                _localizationService.GetString("ErrorExportData"),
-                "OK");
+                Strings.ErrorTitle,
+                Strings.ErrorExportData,
+                Strings.Ok);
         }
         finally
         {

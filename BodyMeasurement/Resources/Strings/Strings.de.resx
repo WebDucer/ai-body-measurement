@@ -277,6 +277,9 @@
   <data name="ConfirmDeleteMessage" xml:space="preserve">
     <value>Möchten Sie diese Messung wirklich löschen?</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="ErrorTitle" xml:space="preserve">
     <value>Fehler</value>
   </data>

@@ -1,10 +1,7 @@
 using BodyMeasurement.Extensions;
-using BodyMeasurement.Models;
-using BodyMeasurement.Services;
+using BodyMeasurement.Views;
 using BodyMeasurement.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Moq;
 
 namespace BodyMeasurement.Tests.Extensions;
 
@@ -19,21 +16,14 @@ public class ServiceCollectionExtensionsTests
         // Arrange
         var services = new ServiceCollection();
 
-        // Register dependencies needed by AddEditWeightViewModel
-        services.AddSingleton(new Mock<IDatabaseService>().Object);
-        services.AddSingleton(new Mock<ISettingsService>().Object);
-        services.AddSingleton(new Mock<INavigationService>().Object);
-        services.AddSingleton(new Mock<ILocalizationService>().Object);
-        services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
-        services.AddLogging();
+        // Act - use the extension method with a real View (Page subclass) and ViewModel
+        services.AddViewWithViewModel<AddEditWeightPage, AddEditWeightViewModel>(ServiceLifetime.Transient);
 
-        // Act - use the extension method
-        services.AddViewWithViewModel<AddEditWeightViewModel, AddEditWeightViewModel>(ServiceLifetime.Transient);
-
-        // Assert - both types are registered
-        var provider = services.BuildServiceProvider();
-        var descriptors = services.Where(d => d.ServiceType == typeof(AddEditWeightViewModel)).ToList();
-        Assert.NotEmpty(descriptors);
+        // Assert - both types are registered as service descriptors
+        var viewDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(AddEditWeightPage));
+        var viewModelDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(AddEditWeightViewModel));
+        Assert.NotNull(viewDescriptor);
+        Assert.NotNull(viewModelDescriptor);
     }
 
     [Fact]
@@ -43,11 +33,13 @@ public class ServiceCollectionExtensionsTests
         var services = new ServiceCollection();
 
         // Act - call without explicit lifetime
-        services.AddViewWithViewModel<AddEditWeightViewModel, AddEditWeightViewModel>();
+        services.AddViewWithViewModel<AddEditWeightPage, AddEditWeightViewModel>();
 
-        // Assert - the registered descriptors should use Transient lifetime
-        var descriptors = services.Where(d => d.ServiceType == typeof(AddEditWeightViewModel)).ToList();
-        Assert.All(descriptors, d => Assert.Equal(ServiceLifetime.Transient, d.Lifetime));
+        // Assert - both registered descriptors use Transient lifetime
+        var viewDescriptor = services.First(d => d.ServiceType == typeof(AddEditWeightPage));
+        var viewModelDescriptor = services.First(d => d.ServiceType == typeof(AddEditWeightViewModel));
+        Assert.Equal(ServiceLifetime.Transient, viewDescriptor.Lifetime);
+        Assert.Equal(ServiceLifetime.Transient, viewModelDescriptor.Lifetime);
     }
 
     [Fact]
@@ -57,11 +49,13 @@ public class ServiceCollectionExtensionsTests
         var services = new ServiceCollection();
 
         // Act
-        services.AddViewWithViewModel<AddEditWeightViewModel, AddEditWeightViewModel>(ServiceLifetime.Singleton);
+        services.AddViewWithViewModel<AddEditWeightPage, AddEditWeightViewModel>(ServiceLifetime.Singleton);
 
         // Assert
-        var descriptors = services.Where(d => d.ServiceType == typeof(AddEditWeightViewModel)).ToList();
-        Assert.All(descriptors, d => Assert.Equal(ServiceLifetime.Singleton, d.Lifetime));
+        var viewDescriptor = services.First(d => d.ServiceType == typeof(AddEditWeightPage));
+        var viewModelDescriptor = services.First(d => d.ServiceType == typeof(AddEditWeightViewModel));
+        Assert.Equal(ServiceLifetime.Singleton, viewDescriptor.Lifetime);
+        Assert.Equal(ServiceLifetime.Singleton, viewModelDescriptor.Lifetime);
     }
 
     [Fact]
@@ -71,7 +65,7 @@ public class ServiceCollectionExtensionsTests
         var services = new ServiceCollection();
 
         // Act
-        var result = services.AddViewWithViewModel<AddEditWeightViewModel, AddEditWeightViewModel>();
+        var result = services.AddViewWithViewModel<AddEditWeightPage, AddEditWeightViewModel>();
 
         // Assert - fluent API: returns the same instance
         Assert.Same(services, result);
@@ -84,9 +78,9 @@ public class ServiceCollectionExtensionsTests
         var services = new ServiceCollection();
 
         // Act
-        services.AddViewWithViewModel<AddEditWeightViewModel, AddEditWeightViewModel>();
+        services.AddViewWithViewModel<AddEditWeightPage, AddEditWeightViewModel>();
 
-        // Assert - the ViewModel type is registered as its own service type
+        // Assert - the ViewModel type is registered as its own service type with matching implementation type
         var descriptor = services.FirstOrDefault(d => d.ServiceType == typeof(AddEditWeightViewModel));
         Assert.NotNull(descriptor);
         Assert.Equal(typeof(AddEditWeightViewModel), descriptor.ImplementationType);

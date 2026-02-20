@@ -14,7 +14,6 @@ public class ApplyQueryAttributesTests
     private readonly Mock<IDatabaseService> _mockDb;
     private readonly Mock<ISettingsService> _mockSettings;
     private readonly Mock<INavigationService> _mockNav;
-    private readonly Mock<ILocalizationService> _mockLocalization;
     private readonly Mock<ILogger<AddEditWeightViewModel>> _mockLogger;
 
     public ApplyQueryAttributesTests()
@@ -22,12 +21,9 @@ public class ApplyQueryAttributesTests
         _mockDb = new Mock<IDatabaseService>();
         _mockSettings = new Mock<ISettingsService>();
         _mockNav = new Mock<INavigationService>();
-        _mockLocalization = new Mock<ILocalizationService>();
         _mockLogger = new Mock<ILogger<AddEditWeightViewModel>>();
 
         _mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
-        _mockLocalization.Setup(s => s.GetString("AddWeightTitle")).Returns("Add Weight");
-        _mockLocalization.Setup(s => s.GetString("EditWeightTitle")).Returns("Edit Weight");
     }
 
     private AddEditWeightViewModel CreateViewModel() =>
@@ -35,7 +31,6 @@ public class ApplyQueryAttributesTests
             _mockDb.Object,
             _mockSettings.Object,
             _mockNav.Object,
-            _mockLocalization.Object,
             _mockLogger.Object);
 
     [Fact]
