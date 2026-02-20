@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.ViewModels;
@@ -13,6 +15,8 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IExportService _exportService;
     private readonly IDatabaseService _databaseService;
     private readonly ILocalizationService _localizationService;
+    private readonly INavigationService _navigationService;
+    private readonly ILogger<SettingsViewModel> _logger;
 
     [ObservableProperty]
     private string _selectedLanguage;
@@ -27,12 +31,16 @@ public partial class SettingsViewModel : ObservableObject
         ISettingsService settingsService,
         IExportService exportService,
         IDatabaseService databaseService,
-        ILocalizationService localizationService)
+        ILocalizationService localizationService,
+        INavigationService navigationService,
+        ILogger<SettingsViewModel> logger)
     {
         _settingsService = settingsService;
         _exportService = exportService;
         _databaseService = databaseService;
         _localizationService = localizationService;
+        _navigationService = navigationService;
+        _logger = logger;
 
         // Load current settings
         _selectedLanguage = _settingsService.Language;
@@ -49,23 +57,24 @@ public partial class SettingsViewModel : ObservableObject
 
         // Update the localization service which will change the culture
         _localizationService.SetLanguage(value);
-        
+
         // Show message and restart the app to apply changes
+        // Application.Current is used directly here intentionally — the Dispatcher and window
+        // recreation is app-lifecycle specific and has no sensible interface abstraction.
         Application.Current?.Dispatcher.Dispatch(async () =>
         {
-            bool shouldRestart = await Application.Current.MainPage!.DisplayAlert(
-                "Language Changed",
-                "The app needs to restart to apply the language change. Restart now?",
-                "Yes",
-                "No");
-            
+            bool shouldRestart = await Application.Current.Windows[0].Page!.DisplayAlertAsync(
+                Strings.LanguageChangedTitle,
+                Strings.LanguageChangedMessage,
+                Strings.Yes,
+                Strings.No);
+
             if (shouldRestart)
             {
                 // Restart the app by recreating the main window
                 var window = Application.Current.Windows.FirstOrDefault();
                 if (window != null)
                 {
-                    // Close current window and create new one
                     window.Page = new AppShell();
                 }
             }
@@ -78,7 +87,6 @@ public partial class SettingsViewModel : ObservableObject
     partial void OnSelectedUnitChanged(string value)
     {
         _settingsService.PreferredUnit = value;
-        // In a real app, this would trigger UI refresh with new units
     }
 
     /// <summary>
@@ -91,14 +99,14 @@ public partial class SettingsViewModel : ObservableObject
         {
             IsExporting = true;
 
-            var entries = await _databaseService.GetAllWeightEntriesAsync();
-            
+            var entries = await _databaseService.GetMeasurementHistoryAsync();
+
             if (entries.Count == 0)
             {
-                await Application.Current!.MainPage!.DisplayAlert(
-                    "No Data",
-                    "No measurements to export",
-                    "OK");
+                await _navigationService.ShowAlertAsync(
+                    Strings.NoDataTitle,
+                    Strings.NoDataExportMessage,
+                    Strings.Ok);
                 return;
             }
 
@@ -107,19 +115,19 @@ public partial class SettingsViewModel : ObservableObject
 
             if (shared)
             {
-                await Application.Current!.MainPage!.DisplayAlert(
-                    "Success",
-                    "Data exported successfully",
-                    "OK");
+                await _navigationService.ShowAlertAsync(
+                    Strings.ExportSuccessTitle,
+                    Strings.ExportSuccessMessage,
+                    Strings.Ok);
             }
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error exporting CSV: {ex.Message}");
-            await Application.Current!.MainPage!.DisplayAlert(
-                "Error",
-                "Failed to export data",
-                "OK");
+            _logger.LogError(ex, "Error exporting CSV");
+            await _navigationService.ShowAlertAsync(
+                Strings.ErrorTitle,
+                Strings.ErrorExportData,
+                Strings.Ok);
         }
         finally
         {
@@ -137,14 +145,14 @@ public partial class SettingsViewModel : ObservableObject
         {
             IsExporting = true;
 
-            var entries = await _databaseService.GetAllWeightEntriesAsync();
-            
+            var entries = await _databaseService.GetMeasurementHistoryAsync();
+
             if (entries.Count == 0)
             {
-                await Application.Current!.MainPage!.DisplayAlert(
-                    "No Data",
-                    "No measurements to export",
-                    "OK");
+                await _navigationService.ShowAlertAsync(
+                    Strings.NoDataTitle,
+                    Strings.NoDataExportMessage,
+                    Strings.Ok);
                 return;
             }
 
@@ -153,19 +161,19 @@ public partial class SettingsViewModel : ObservableObject
 
             if (shared)
             {
-                await Application.Current!.MainPage!.DisplayAlert(
-                    "Success",
-                    "Data exported successfully",
-                    "OK");
+                await _navigationService.ShowAlertAsync(
+                    Strings.ExportSuccessTitle,
+                    Strings.ExportSuccessMessage,
+                    Strings.Ok);
             }
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error exporting JSON: {ex.Message}");
-            await Application.Current!.MainPage!.DisplayAlert(
-                "Error",
-                "Failed to export data",
-                "OK");
+            _logger.LogError(ex, "Error exporting JSON");
+            await _navigationService.ShowAlertAsync(
+                Strings.ErrorTitle,
+                Strings.ErrorExportData,
+                Strings.Ok);
         }
         finally
         {

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BodyMeasurement/BodyMeasurement.csproj" />
+  <Project Path="BodyMeasurement.Tests/BodyMeasurement.Tests.csproj" />
+</Solution>

@@ -25,7 +25,7 @@ public class AdditionalFlowTests
         var mockExport = new Mock<IExportService>();
         var mockSettings = new Mock<ISettingsService>();
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
         mockSettings.Setup(s => s.Language).Returns("en");
         
         mockExport.Setup(x => x.ExportToCsvAsync(It.IsAny<List<WeightEntry>>(), It.IsAny<string>()))
@@ -35,7 +35,7 @@ public class AdditionalFlowTests
             .ReturnsAsync(true);
         
         // Act - Step 1: User selects export
-        var allEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var allEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         
         // Act - Step 2: Generate CSV
         var csvPath = await mockExport.Object.ExportToCsvAsync(allEntries, "en");
@@ -65,7 +65,7 @@ public class AdditionalFlowTests
         var mockDb = new Mock<IDatabaseService>();
         var mockExport = new Mock<IExportService>();
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
         
         mockExport.Setup(x => x.ExportToJsonAsync(It.IsAny<List<WeightEntry>>()))
             .ReturnsAsync("/path/to/weight-data-2026-02-16.json");
@@ -74,7 +74,7 @@ public class AdditionalFlowTests
             .ReturnsAsync(true);
         
         // Act
-        var allEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var allEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         var jsonPath = await mockExport.Object.ExportToJsonAsync(allEntries);
         var shared = await mockExport.Object.ShareFileAsync(jsonPath);
         
@@ -91,18 +91,18 @@ public class AdditionalFlowTests
         var mockDb = new Mock<IDatabaseService>();
         var mockExport = new Mock<IExportService>();
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(new List<WeightEntry>());
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(new List<WeightEntry>());
         
         mockExport.Setup(x => x.ExportToCsvAsync(It.IsAny<List<WeightEntry>>(), It.IsAny<string>()))
-            .ReturnsAsync((string?)null); // No file generated for empty data
+            .ReturnsAsync(string.Empty); // No file generated for empty data
         
         // Act
-        var entries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var entries = await mockDb.Object.GetMeasurementHistoryAsync();
         var csvPath = await mockExport.Object.ExportToCsvAsync(entries, "en");
         
         // Assert
         Assert.Empty(entries);
-        Assert.Null(csvPath);
+        Assert.Empty(csvPath);
     }
     
     #endregion
@@ -230,11 +230,11 @@ public class AdditionalFlowTests
         var mockDb = new Mock<IDatabaseService>();
         var mockSettings = new Mock<ISettingsService>();
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
         mockSettings.Setup(s => s.PreferredUnit).Returns("lbs");
         
         // Act - Load entries and convert to preferred unit
-        var allEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var allEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         var convertedWeights = allEntries.Select(e => WeightConverter.KgToLbs(e.WeightKg)).ToList();
         
         // Assert - All weights converted

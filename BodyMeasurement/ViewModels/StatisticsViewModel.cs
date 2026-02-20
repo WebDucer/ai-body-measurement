@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
 using BodyMeasurement.Services;
 
@@ -12,6 +13,7 @@ public partial class StatisticsViewModel : ObservableObject
 {
     private readonly IStatisticsService _statisticsService;
     private readonly ISettingsService _settingsService;
+    private readonly ILogger<StatisticsViewModel> _logger;
 
     [ObservableProperty]
     private Statistics? _statistics;
@@ -30,10 +32,12 @@ public partial class StatisticsViewModel : ObservableObject
 
     public StatisticsViewModel(
         IStatisticsService statisticsService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        ILogger<StatisticsViewModel> logger)
     {
         _statisticsService = statisticsService;
         _settingsService = settingsService;
+        _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
     }
@@ -62,7 +66,7 @@ public partial class StatisticsViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error loading statistics: {ex.Message}");
+            _logger.LogError(ex, "Error loading statistics");
             HasData = false;
         }
         finally

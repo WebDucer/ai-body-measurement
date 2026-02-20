@@ -6,7 +6,7 @@
              xmlns:resources="clr-namespace:BodyMeasurement.Resources.Strings"
              x:Class="BodyMeasurement.Views.ChartPage"
              x:DataType="viewModels:ChartViewModel"
-             Title="{x:Static resources:Strings.ChartPageTitle}">
+             Title="{x:Static resources:Strings.ChartTitle}">
 
     <Grid RowDefinitions="Auto,*">
 

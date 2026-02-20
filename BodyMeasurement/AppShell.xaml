@@ -11,27 +11,39 @@
     <TabBar>
         <ShellContent
             Title="{x:Static resources:Strings.TabHome}"
-            Icon="{FontImage Glyph='🏠', Size=24}"
             ContentTemplate="{DataTemplate views:MainPage}"
-            Route="main" />
+            Route="main">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE88A;" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
         <ShellContent
             Title="{x:Static resources:Strings.TabChart}"
-            Icon="{FontImage Glyph='📊', Size=24}"
             ContentTemplate="{DataTemplate views:ChartPage}"
-            Route="chart" />
+            Route="chart">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE26B;" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
         <ShellContent
             Title="{x:Static resources:Strings.TabStatistics}"
-            Icon="{FontImage Glyph='📈', Size=24}"
             ContentTemplate="{DataTemplate views:StatisticsPage}"
-            Route="statistics" />
+            Route="statistics">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE6E1;" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
 
         <ShellContent
             Title="{x:Static resources:Strings.TabSettings}"
-            Icon="{FontImage Glyph='⚙️', Size=24}"
             ContentTemplate="{DataTemplate views:SettingsPage}"
-            Route="settings" />
+            Route="settings">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE8B8;" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
     </TabBar>
 
 </Shell>

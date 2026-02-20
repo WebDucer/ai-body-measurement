@@ -14,9 +14,4 @@ public interface ILocalizationService
     /// Sets the app language and updates the UI culture
     /// </summary>
     void SetLanguage(string languageCode);
-
-    /// <summary>
-    /// Gets a localized string by key
-    /// </summary>
-    string GetString(string key);
 }

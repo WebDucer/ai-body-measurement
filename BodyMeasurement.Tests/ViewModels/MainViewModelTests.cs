@@ -13,6 +13,7 @@ public class MainViewModelTests
         var mockDb = new Mock<IDatabaseService>();
         var mockStats = new Mock<IStatisticsService>();
         var mockSettings = new Mock<ISettingsService>();
+        var mockNav = new Mock<INavigationService>();
         mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
 
         // Act - Test that services can be injected
@@ -23,6 +24,7 @@ public class MainViewModelTests
         Assert.NotNull(mockDb.Object);
         Assert.NotNull(mockStats.Object);
         Assert.NotNull(mockSettings.Object);
+        Assert.NotNull(mockNav.Object);
     }
 
     [Fact]
@@ -39,16 +41,16 @@ public class MainViewModelTests
             new WeightEntry { Id = 2, Date = DateTime.Today.AddDays(-1), WeightKg = 75.5 }
         };
 
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
         mockStats.Setup(x => x.GetCurrentWeightAsync()).ReturnsAsync(75.0);
         mockStats.Setup(x => x.GetStartingWeightAsync()).ReturnsAsync(75.5);
         mockStats.Setup(x => x.CalculateWeightChangeAsync()).ReturnsAsync((-0.5, -0.66));
 
         // Act
-        await mockDb.Object.GetAllWeightEntriesAsync();
+        await mockDb.Object.GetMeasurementHistoryAsync();
 
         // Assert
-        mockDb.Verify(x => x.GetAllWeightEntriesAsync(), Times.Once);
+        mockDb.Verify(x => x.GetMeasurementHistoryAsync(), Times.Once);
     }
 
     [Fact]
@@ -58,13 +60,13 @@ public class MainViewModelTests
         var mockDb = new Mock<IDatabaseService>();
         var entryId = 1;
 
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(entryId)).ReturnsAsync(1);
+        mockDb.Setup(x => x.RemoveMeasurementAsync(entryId)).ReturnsAsync(1);
 
         // Act
-        await mockDb.Object.DeleteWeightEntryAsync(entryId);
+        await mockDb.Object.RemoveMeasurementAsync(entryId);
 
         // Assert
-        mockDb.Verify(x => x.DeleteWeightEntryAsync(entryId), Times.Once);
+        mockDb.Verify(x => x.RemoveMeasurementAsync(entryId), Times.Once);
     }
 
     [Fact]
@@ -94,10 +96,10 @@ public class MainViewModelTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(new List<WeightEntry>());
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(new List<WeightEntry>());
 
         // Act
-        var entries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var entries = await mockDb.Object.GetMeasurementHistoryAsync();
 
         // Assert
         Assert.Empty(entries);
@@ -150,10 +152,10 @@ public class MainViewModelTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(999)).ReturnsAsync(0);
+        mockDb.Setup(x => x.RemoveMeasurementAsync(999)).ReturnsAsync(0);
 
         // Act
-        var result = await mockDb.Object.DeleteWeightEntryAsync(999);
+        var result = await mockDb.Object.RemoveMeasurementAsync(999);
 
         // Assert
         Assert.Equal(0, result);

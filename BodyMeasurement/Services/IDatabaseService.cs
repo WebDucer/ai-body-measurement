@@ -13,32 +13,32 @@ public interface IDatabaseService
     Task InitializeAsync();
 
     /// <summary>
-    /// Inserts a new weight entry into the database
+    /// Records a new measurement in the database
     /// </summary>
-    Task<int> InsertWeightEntryAsync(WeightEntry entry);
+    Task<int> RecordMeasurementAsync(WeightEntry entry);
 
     /// <summary>
-    /// Gets all weight entries sorted by date descending
+    /// Gets the full measurement history sorted by date descending
     /// </summary>
-    Task<List<WeightEntry>> GetAllWeightEntriesAsync();
+    Task<List<WeightEntry>> GetMeasurementHistoryAsync();
 
     /// <summary>
-    /// Gets a weight entry by its ID
+    /// Finds a measurement by its ID
     /// </summary>
-    Task<WeightEntry?> GetWeightEntryByIdAsync(int id);
+    Task<WeightEntry?> FindMeasurementAsync(int id);
 
     /// <summary>
-    /// Updates an existing weight entry
+    /// Updates an existing measurement
     /// </summary>
-    Task<int> UpdateWeightEntryAsync(WeightEntry entry);
+    Task<int> UpdateMeasurementAsync(WeightEntry entry);
 
     /// <summary>
-    /// Deletes a weight entry
+    /// Removes a measurement
     /// </summary>
-    Task<int> DeleteWeightEntryAsync(int id);
+    Task<int> RemoveMeasurementAsync(int id);
 
     /// <summary>
-    /// Gets weight entries within a date range
+    /// Gets measurements within a date range
     /// </summary>
-    Task<List<WeightEntry>> GetWeightEntriesInDateRangeAsync(DateTime startDate, DateTime endDate);
+    Task<List<WeightEntry>> GetMeasurementsInPeriodAsync(DateTime startDate, DateTime endDate);
 }

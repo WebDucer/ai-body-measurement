@@ -19,7 +19,7 @@ public class StatisticsService : IStatisticsService
     /// </summary>
     public async Task<double?> GetCurrentWeightAsync()
     {
-        var entries = await _databaseService.GetAllWeightEntriesAsync();
+        var entries = await _databaseService.GetMeasurementHistoryAsync();
         return entries.FirstOrDefault()?.WeightKg;
     }
 
@@ -28,7 +28,7 @@ public class StatisticsService : IStatisticsService
     /// </summary>
     public async Task<double?> GetStartingWeightAsync()
     {
-        var entries = await _databaseService.GetAllWeightEntriesAsync();
+        var entries = await _databaseService.GetMeasurementHistoryAsync();
         return entries.LastOrDefault()?.WeightKg;
     }
 
@@ -60,7 +60,7 @@ public class StatisticsService : IStatisticsService
         var endDate = DateTime.Today;
         var startDate = endDate.AddDays(-days);
 
-        var entries = await _databaseService.GetWeightEntriesInDateRangeAsync(startDate, endDate);
+        var entries = await _databaseService.GetMeasurementsInPeriodAsync(startDate, endDate);
 
         if (entries.Count == 0)
         {
@@ -94,11 +94,11 @@ public class StatisticsService : IStatisticsService
         {
             var endDate = DateTime.Today;
             var startDate = endDate.AddDays(-periodDays.Value);
-            entries = await _databaseService.GetWeightEntriesInDateRangeAsync(startDate, endDate);
+            entries = await _databaseService.GetMeasurementsInPeriodAsync(startDate, endDate);
         }
         else
         {
-            entries = await _databaseService.GetAllWeightEntriesAsync();
+            entries = await _databaseService.GetMeasurementHistoryAsync();
         }
 
         if (entries.Count == 0)
