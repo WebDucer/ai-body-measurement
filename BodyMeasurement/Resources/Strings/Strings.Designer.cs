@@ -139,6 +139,33 @@ namespace BodyMeasurement.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No measurements yet. Tap + to add your first entry..
+        /// </summary>
+        public static string EmptyMeasurements {
+            get {
+                return ResourceManager.GetString("EmptyMeasurements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Weight Chart.
         /// </summary>
         public static string ChartPageTitle {

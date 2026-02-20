@@ -22,7 +22,7 @@ public class AddMeasurementFlowTests
         mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
         
         // Mock database operations with realistic behavior
-        mockDb.Setup(x => x.InsertWeightEntryAsync(It.IsAny<WeightEntry>()))
+        mockDb.Setup(x => x.RecordMeasurementAsync(It.IsAny<WeightEntry>()))
             .Callback<WeightEntry>(entry =>
             {
                 entry.Id = entries.Count + 1;
@@ -31,7 +31,7 @@ public class AddMeasurementFlowTests
             })
             .ReturnsAsync((WeightEntry entry) => entry.Id);
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.OrderByDescending(e => e.Date).ToList());
         
         mockStats.Setup(x => x.GetCurrentWeightAsync())
@@ -46,10 +46,10 @@ public class AddMeasurementFlowTests
             CreatedAt = DateTime.Now
         };
         
-        var insertedId = await mockDb.Object.InsertWeightEntryAsync(newEntry);
+        var insertedId = await mockDb.Object.RecordMeasurementAsync(newEntry);
         
         // Act - Step 2: Retrieve all entries (simulating main page load)
-        var allEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var allEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         var currentWeight = await mockStats.Object.GetCurrentWeightAsync();
         
         // Assert - Verify the complete flow
@@ -64,8 +64,8 @@ public class AddMeasurementFlowTests
         Assert.Equal(75.5, currentWeight);
         
         // Verify database methods were called
-        mockDb.Verify(x => x.InsertWeightEntryAsync(It.IsAny<WeightEntry>()), Times.Once);
-        mockDb.Verify(x => x.GetAllWeightEntriesAsync(), Times.Once);
+        mockDb.Verify(x => x.RecordMeasurementAsync(It.IsAny<WeightEntry>()), Times.Once);
+        mockDb.Verify(x => x.GetMeasurementHistoryAsync(), Times.Once);
     }
     
     [Fact]
@@ -78,7 +78,7 @@ public class AddMeasurementFlowTests
         
         mockSettings.Setup(s => s.PreferredUnit).Returns("lbs");
         
-        mockDb.Setup(x => x.InsertWeightEntryAsync(It.IsAny<WeightEntry>()))
+        mockDb.Setup(x => x.RecordMeasurementAsync(It.IsAny<WeightEntry>()))
             .Callback<WeightEntry>(entry =>
             {
                 entry.Id = entries.Count + 1;
@@ -98,7 +98,7 @@ public class AddMeasurementFlowTests
             CreatedAt = DateTime.Now
         };
         
-        await mockDb.Object.InsertWeightEntryAsync(entry);
+        await mockDb.Object.RecordMeasurementAsync(entry);
         
         // Assert - Verify data is stored in kg
         Assert.Single(entries);
@@ -138,7 +138,7 @@ public class AddMeasurementFlowTests
         var entries = new List<WeightEntry>();
         var mockDb = new Mock<IDatabaseService>();
         
-        mockDb.Setup(x => x.InsertWeightEntryAsync(It.IsAny<WeightEntry>()))
+        mockDb.Setup(x => x.RecordMeasurementAsync(It.IsAny<WeightEntry>()))
             .Callback<WeightEntry>(entry =>
             {
                 entry.Id = entries.Count + 1;
@@ -147,32 +147,32 @@ public class AddMeasurementFlowTests
             })
             .ReturnsAsync((WeightEntry entry) => entry.Id);
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.OrderByDescending(e => e.Date).ToList());
         
         // Act - Add three measurements
-        await mockDb.Object.InsertWeightEntryAsync(new WeightEntry
+        await mockDb.Object.RecordMeasurementAsync(new WeightEntry
         {
             WeightKg = 76.0,
             Date = DateTime.Today.AddDays(-2),
             CreatedAt = DateTime.Now
         });
         
-        await mockDb.Object.InsertWeightEntryAsync(new WeightEntry
+        await mockDb.Object.RecordMeasurementAsync(new WeightEntry
         {
             WeightKg = 75.5,
             Date = DateTime.Today.AddDays(-1),
             CreatedAt = DateTime.Now
         });
         
-        await mockDb.Object.InsertWeightEntryAsync(new WeightEntry
+        await mockDb.Object.RecordMeasurementAsync(new WeightEntry
         {
             WeightKg = 75.0,
             Date = DateTime.Today,
             CreatedAt = DateTime.Now
         });
         
-        var allEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var allEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         
         // Assert - Verify chronological order (most recent first)
         Assert.Equal(3, allEntries.Count);

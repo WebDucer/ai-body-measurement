@@ -18,7 +18,7 @@
                     <Entry Placeholder="Enter weight"
                            Text="{Binding Weight}"
                            Keyboard="Numeric"
-                           HorizontalOptions="FillAndExpand"
+                           HorizontalOptions="Fill"
                            VerticalOptions="Center" />
                     <Label Text="{Binding PreferredUnit}"
                            FontSize="16"

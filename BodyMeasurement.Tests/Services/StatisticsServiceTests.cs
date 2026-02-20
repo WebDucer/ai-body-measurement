@@ -16,7 +16,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today, WeightKg = 73.5 }, // Most recent first (sorted descending)
             new WeightEntry { Date = DateTime.Today.AddDays(-2), WeightKg = 75.0 }
         };
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -32,7 +32,7 @@ public class StatisticsServiceTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(new List<WeightEntry>());
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(new List<WeightEntry>());
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -53,7 +53,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today, WeightKg = 73.5 },
             new WeightEntry { Date = DateTime.Today.AddDays(-2), WeightKg = 75.0 } // Oldest last
         };
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -69,7 +69,7 @@ public class StatisticsServiceTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(new List<WeightEntry>());
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(new List<WeightEntry>());
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -90,7 +90,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today, WeightKg = 70.0 },      // Current (first in sorted list)
             new WeightEntry { Date = DateTime.Today.AddDays(-30), WeightKg = 75.0 }  // Starting (last)
         };
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -114,7 +114,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today, WeightKg = 77.0 },
             new WeightEntry { Date = DateTime.Today.AddDays(-30), WeightKg = 75.0 }
         };
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -138,7 +138,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today.AddDays(-5), WeightKg = 73.0 },
             new WeightEntry { Date = DateTime.Today.AddDays(-2), WeightKg = 72.0 }
         };
-        mockDb.Setup(x => x.GetWeightEntriesInDateRangeAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+        mockDb.Setup(x => x.GetMeasurementsInPeriodAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
               .ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);
@@ -158,7 +158,7 @@ public class StatisticsServiceTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.GetWeightEntriesInDateRangeAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+        mockDb.Setup(x => x.GetMeasurementsInPeriodAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
               .ReturnsAsync(new List<WeightEntry>());
 
         var service = new StatisticsService(mockDb.Object);
@@ -183,7 +183,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today.AddDays(-10), WeightKg = 76.0 },
             new WeightEntry { Date = DateTime.Today, WeightKg = 75.0 }
         };
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -205,7 +205,7 @@ public class StatisticsServiceTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(new List<WeightEntry>());
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(new List<WeightEntry>());
 
         var service = new StatisticsService(mockDb.Object);
 
@@ -228,7 +228,7 @@ public class StatisticsServiceTests
             new WeightEntry { Date = DateTime.Today.AddDays(-5), WeightKg = 76.0 },
             new WeightEntry { Date = DateTime.Today, WeightKg = 75.0 }
         };
-        mockDb.Setup(x => x.GetWeightEntriesInDateRangeAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+        mockDb.Setup(x => x.GetMeasurementsInPeriodAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
               .ReturnsAsync(entries);
 
         var service = new StatisticsService(mockDb.Object);

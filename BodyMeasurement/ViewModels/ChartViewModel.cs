@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
 using BodyMeasurement.Services;
 
@@ -13,6 +14,7 @@ public partial class ChartViewModel : ObservableObject
 {
     private readonly IDatabaseService _databaseService;
     private readonly ISettingsService _settingsService;
+    private readonly ILogger<ChartViewModel> _logger;
 
     [ObservableProperty]
     private ObservableCollection<WeightEntry> _chartData = new();
@@ -40,10 +42,12 @@ public partial class ChartViewModel : ObservableObject
 
     public ChartViewModel(
         IDatabaseService databaseService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        ILogger<ChartViewModel> logger)
     {
         _databaseService = databaseService;
         _settingsService = settingsService;
+        _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
     }
@@ -79,11 +83,11 @@ public partial class ChartViewModel : ObservableObject
             List<WeightEntry> entries;
             if (SelectedFilter == "All")
             {
-                entries = await _databaseService.GetAllWeightEntriesAsync();
+                entries = await _databaseService.GetMeasurementHistoryAsync();
             }
             else
             {
-                entries = await _databaseService.GetWeightEntriesInDateRangeAsync(startDate, endDate);
+                entries = await _databaseService.GetMeasurementsInPeriodAsync(startDate, endDate);
             }
 
             // Sort by date ascending for chart display
@@ -115,8 +119,7 @@ public partial class ChartViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error loading chart data: {ex.Message}");
-            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+            _logger.LogError(ex, "Error loading chart data");
             HasData = false;
             ChartData.Clear();
         }

@@ -169,11 +169,11 @@ public class ExportServiceTests
     }
 
     [Theory]
-    [InlineData("Test, with comma", true)]
-    [InlineData("Test \"with\" quotes", true)]
-    [InlineData("Test\nwith\nnewlines", true)]
-    [InlineData("Simple text", false)]
-    public void CsvEscaping_HandlesSpecialCharacters(string input, bool shouldEscape)
+    [InlineData("Test, with comma")]
+    [InlineData("Test \"with\" quotes")]
+    [InlineData("Test\nwith\nnewlines")]
+    [InlineData("Simple text")]
+    public void CsvEscaping_HandlesSpecialCharacters(string input)
     {
         // This test verifies that the ExportService interface can handle entries with special characters
         // The actual escaping logic is tested through integration

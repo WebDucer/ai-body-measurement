@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
 using BodyMeasurement.Services;
 
@@ -8,14 +9,13 @@ namespace BodyMeasurement.ViewModels;
 /// <summary>
 /// ViewModel for adding or editing weight measurements
 /// </summary>
-[QueryProperty(nameof(EntryId), "id")]
 public partial class AddEditWeightViewModel : ObservableObject
 {
     private readonly IDatabaseService _databaseService;
     private readonly ISettingsService _settingsService;
-
-    [ObservableProperty]
-    private int? _entryId;
+    private readonly INavigationService _navigationService;
+    private readonly ILocalizationService _localizationService;
+    private readonly ILogger<AddEditWeightViewModel> _logger;
 
     [ObservableProperty]
     private double _weight;
@@ -41,31 +41,41 @@ public partial class AddEditWeightViewModel : ObservableObject
     [ObservableProperty]
     private string? _dateError;
 
+    private int? _editId;
+
     public AddEditWeightViewModel(
         IDatabaseService databaseService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        INavigationService navigationService,
+        ILocalizationService localizationService,
+        ILogger<AddEditWeightViewModel> logger)
     {
         _databaseService = databaseService;
         _settingsService = settingsService;
+        _navigationService = navigationService;
+        _localizationService = localizationService;
+        _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
     }
 
     /// <summary>
-    /// Called when the EntryId property changes (navigation parameter)
+    /// Applies query attributes passed via Shell navigation parameters
     /// </summary>
-    partial void OnEntryIdChanged(int? value)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (value.HasValue)
+        if (query.TryGetValue("MeasurementId", out var value) && value is int id)
         {
+            _editId = id;
             IsEditMode = true;
-            Title = "Edit Weight";
-            _ = LoadWeightEntryAsync(value.Value);
+            Title = _localizationService.GetString("EditWeightTitle");
+            _ = LoadWeightEntryAsync(id);
         }
         else
         {
+            _editId = null;
             IsEditMode = false;
-            Title = "Add Weight";
+            Title = _localizationService.GetString("AddWeightTitle");
             Weight = 0;
             Date = DateTime.Today;
             Notes = null;
@@ -79,7 +89,7 @@ public partial class AddEditWeightViewModel : ObservableObject
     {
         try
         {
-            var entry = await _databaseService.GetWeightEntryByIdAsync(id);
+            var entry = await _databaseService.FindMeasurementAsync(id);
             if (entry != null)
             {
                 // Convert from kg if user prefers lbs
@@ -98,7 +108,7 @@ public partial class AddEditWeightViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error loading weight entry: {ex.Message}");
+            _logger.LogError(ex, "Error loading weight entry");
         }
     }
 
@@ -112,7 +122,7 @@ public partial class AddEditWeightViewModel : ObservableObject
         // Validate weight
         if (Weight <= 0)
         {
-            WeightError = "Weight must be greater than zero";
+            WeightError = _localizationService.GetString("ValidationWeightPositive");
             isValid = false;
         }
         else
@@ -123,7 +133,7 @@ public partial class AddEditWeightViewModel : ObservableObject
         // Validate date
         if (Date > DateTime.Today)
         {
-            DateError = "Date cannot be in the future";
+            DateError = _localizationService.GetString("ValidationDateNotFuture");
             isValid = false;
         }
         else
@@ -148,20 +158,20 @@ public partial class AddEditWeightViewModel : ObservableObject
         try
         {
             // Convert to kg if user entered in lbs
-            double weightKg = PreferredUnit == "lbs" 
-                ? WeightConverter.LbsToKg(Weight) 
+            double weightKg = PreferredUnit == "lbs"
+                ? WeightConverter.LbsToKg(Weight)
                 : Weight;
 
-            if (IsEditMode && EntryId.HasValue)
+            if (IsEditMode && _editId.HasValue)
             {
                 // Update existing entry
-                var entry = await _databaseService.GetWeightEntryByIdAsync(EntryId.Value);
+                var entry = await _databaseService.FindMeasurementAsync(_editId.Value);
                 if (entry != null)
                 {
                     entry.WeightKg = weightKg;
                     entry.Date = Date;
                     entry.Notes = Notes;
-                    await _databaseService.UpdateWeightEntryAsync(entry);
+                    await _databaseService.UpdateMeasurementAsync(entry);
                 }
             }
             else
@@ -174,18 +184,18 @@ public partial class AddEditWeightViewModel : ObservableObject
                     Notes = Notes,
                     CreatedAt = DateTime.UtcNow
                 };
-                await _databaseService.InsertWeightEntryAsync(entry);
+                await _databaseService.RecordMeasurementAsync(entry);
             }
 
             // Navigate back
-            await Shell.Current.GoToAsync("..");
+            await _navigationService.GoBackAsync();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error saving weight entry: {ex.Message}");
-            await Application.Current!.MainPage!.DisplayAlert(
-                "Error",
-                "Failed to save measurement",
+            _logger.LogError(ex, "Error saving weight entry");
+            await _navigationService.ShowAlertAsync(
+                _localizationService.GetString("ErrorTitle"),
+                _localizationService.GetString("ErrorSaveMeasurement"),
                 "OK");
         }
     }
@@ -196,6 +206,6 @@ public partial class AddEditWeightViewModel : ObservableObject
     [RelayCommand]
     private async Task CancelAsync()
     {
-        await Shell.Current.GoToAsync("..");
+        await _navigationService.GoBackAsync();
     }
 }

@@ -20,15 +20,15 @@ public class ChartViewModelTests
             new WeightEntry { Date = DateTime.Today, WeightKg = 75.0 }
         };
 
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(entries);
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(entries);
         mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
 
         // Act
-        var result = await mockDb.Object.GetAllWeightEntriesAsync();
+        var result = await mockDb.Object.GetMeasurementHistoryAsync();
 
         // Assert
         Assert.Equal(3, result.Count);
-        mockDb.Verify(x => x.GetAllWeightEntriesAsync(), Times.Once);
+        mockDb.Verify(x => x.GetMeasurementHistoryAsync(), Times.Once);
     }
 
     [Fact]
@@ -44,12 +44,12 @@ public class ChartViewModelTests
             new WeightEntry { Date = DateTime.Today.AddDays(-3), WeightKg = 75.0 }
         };
 
-        mockDb.Setup(x => x.GetWeightEntriesInDateRangeAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+        mockDb.Setup(x => x.GetMeasurementsInPeriodAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
               .ReturnsAsync(entries);
         mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
 
         // Act
-        var result = await mockDb.Object.GetWeightEntriesInDateRangeAsync(DateTime.Today.AddDays(-7), DateTime.Today);
+        var result = await mockDb.Object.GetMeasurementsInPeriodAsync(DateTime.Today.AddDays(-7), DateTime.Today);
 
         // Assert
         Assert.Equal(2, result.Count);
@@ -82,10 +82,10 @@ public class ChartViewModelTests
     {
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync()).ReturnsAsync(new List<WeightEntry>());
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync()).ReturnsAsync(new List<WeightEntry>());
 
         // Act
-        var result = await mockDb.Object.GetAllWeightEntriesAsync();
+        var result = await mockDb.Object.GetMeasurementHistoryAsync();
 
         // Assert
         Assert.Empty(result);

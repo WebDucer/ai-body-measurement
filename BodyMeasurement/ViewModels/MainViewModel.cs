@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
 using BodyMeasurement.Services;
 
@@ -14,6 +15,9 @@ public partial class MainViewModel : ObservableObject
     private readonly IDatabaseService _databaseService;
     private readonly IStatisticsService _statisticsService;
     private readonly ISettingsService _settingsService;
+    private readonly INavigationService _navigationService;
+    private readonly ILocalizationService _localizationService;
+    private readonly ILogger<MainViewModel> _logger;
 
     [ObservableProperty]
     private ObservableCollection<WeightEntry> _weightEntries = new();
@@ -42,11 +46,17 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(
         IDatabaseService databaseService,
         IStatisticsService statisticsService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        INavigationService navigationService,
+        ILocalizationService localizationService,
+        ILogger<MainViewModel> logger)
     {
         _databaseService = databaseService;
         _statisticsService = statisticsService;
         _settingsService = settingsService;
+        _navigationService = navigationService;
+        _localizationService = localizationService;
+        _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
     }
@@ -61,7 +71,7 @@ public partial class MainViewModel : ObservableObject
         {
             IsLoading = true;
 
-            var entries = await _databaseService.GetAllWeightEntriesAsync();
+            var entries = await _databaseService.GetMeasurementHistoryAsync();
             WeightEntries.Clear();
             foreach (var entry in entries)
             {
@@ -75,8 +85,7 @@ public partial class MainViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            // Log error (in production, use proper logging)
-            System.Diagnostics.Debug.WriteLine($"Error loading weight entries: {ex.Message}");
+            _logger.LogError(ex, "Error loading weight entries");
         }
         finally
         {
@@ -105,25 +114,24 @@ public partial class MainViewModel : ObservableObject
     {
         try
         {
-            // In a real app, show confirmation dialog first
-            var result = await Application.Current!.MainPage!.DisplayAlert(
-                "Confirm Delete",
-                "Are you sure you want to delete this measurement?",
-                "Yes",
-                "No");
+            var result = await _navigationService.ShowConfirmationAsync(
+                _localizationService.GetString("ConfirmDeleteTitle"),
+                _localizationService.GetString("ConfirmDeleteMessage"),
+                _localizationService.GetString("Yes"),
+                _localizationService.GetString("No"));
 
             if (!result)
                 return;
 
-            await _databaseService.DeleteWeightEntryAsync(entryId);
+            await _databaseService.RemoveMeasurementAsync(entryId);
             await LoadWeightEntriesAsync();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error deleting weight entry: {ex.Message}");
-            await Application.Current!.MainPage!.DisplayAlert(
-                "Error",
-                "Failed to delete measurement",
+            _logger.LogError(ex, "Error deleting weight entry");
+            await _navigationService.ShowAlertAsync(
+                _localizationService.GetString("ErrorTitle"),
+                _localizationService.GetString("ErrorDeleteMeasurement"),
                 "OK");
         }
     }
@@ -134,7 +142,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task NavigateToAddWeightAsync()
     {
-        await Shell.Current.GoToAsync("addweight");
+        await _navigationService.OpenAddMeasurementAsync();
     }
 
     /// <summary>
@@ -143,7 +151,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task NavigateToEditWeightAsync(int entryId)
     {
-        await Shell.Current.GoToAsync($"editweight?id={entryId}");
+        await _navigationService.OpenEditMeasurementAsync(entryId);
     }
 
     /// <summary>

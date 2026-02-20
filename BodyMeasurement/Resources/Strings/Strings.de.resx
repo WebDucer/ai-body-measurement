@@ -270,6 +270,56 @@
     <value>Nein</value>
   </data>
   
+  <!-- Dialog Titles and Messages -->
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>Löschen bestätigen</value>
+  </data>
+  <data name="ConfirmDeleteMessage" xml:space="preserve">
+    <value>Möchten Sie diese Messung wirklich löschen?</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="ErrorDeleteMeasurement" xml:space="preserve">
+    <value>Messung konnte nicht gelöscht werden</value>
+  </data>
+  <data name="ValidationDateNotFuture" xml:space="preserve">
+    <value>Datum darf nicht in der Zukunft liegen</value>
+  </data>
+  <data name="ErrorSaveMeasurement" xml:space="preserve">
+    <value>Messung konnte nicht gespeichert werden</value>
+  </data>
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>Sprache geändert</value>
+  </data>
+  <data name="LanguageChangedMessage" xml:space="preserve">
+    <value>Die App muss neu gestartet werden, um die Sprachänderung anzuwenden. Jetzt neu starten?</value>
+  </data>
+  <data name="NoDataTitle" xml:space="preserve">
+    <value>Keine Daten</value>
+  </data>
+  <data name="NoDataExportMessage" xml:space="preserve">
+    <value>Keine Messungen zum Exportieren vorhanden</value>
+  </data>
+  <data name="ExportSuccessTitle" xml:space="preserve">
+    <value>Erfolg</value>
+  </data>
+  <data name="ExportSuccessMessage" xml:space="preserve">
+    <value>Daten erfolgreich exportiert</value>
+  </data>
+  <data name="ErrorExportData" xml:space="preserve">
+    <value>Fehler beim Exportieren der Daten</value>
+  </data>
+  <data name="EmptyMeasurements" xml:space="preserve">
+    <value>Noch keine Messungen. Tippen Sie auf +, um Ihren ersten Eintrag hinzuzufügen.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  
   <!-- CSV Export Headers -->
   <data name="CSVHeaderDate" xml:space="preserve">
     <value>Datum</value>

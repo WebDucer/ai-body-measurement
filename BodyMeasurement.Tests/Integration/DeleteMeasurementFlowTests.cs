@@ -24,11 +24,11 @@ public class DeleteMeasurementFlowTests
         var mockDb = new Mock<IDatabaseService>();
         var mockStats = new Mock<IStatisticsService>();
         
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(It.IsAny<int>()))
+        mockDb.Setup(x => x.RemoveMeasurementAsync(It.IsAny<int>()))
             .Callback<int>(id => entries.RemoveAll(e => e.Id == id))
             .ReturnsAsync(1);
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.OrderByDescending(e => e.Date).ToList());
         
         mockStats.Setup(x => x.GetCurrentWeightAsync())
@@ -38,10 +38,10 @@ public class DeleteMeasurementFlowTests
         int entryToDeleteId = 2;
         
         // Act - Step 2: User confirms deletion
-        await mockDb.Object.DeleteWeightEntryAsync(entryToDeleteId);
+        await mockDb.Object.RemoveMeasurementAsync(entryToDeleteId);
         
         // Act - Step 3: Refresh the list
-        var remainingEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var remainingEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         var currentWeight = await mockStats.Object.GetCurrentWeightAsync();
         
         // Assert - Verify entry was deleted
@@ -54,7 +54,7 @@ public class DeleteMeasurementFlowTests
         Assert.Equal(75.0, currentWeight);
         
         // Verify delete was called once
-        mockDb.Verify(x => x.DeleteWeightEntryAsync(2), Times.Once);
+        mockDb.Verify(x => x.RemoveMeasurementAsync(2), Times.Once);
     }
     
     [Fact]
@@ -69,19 +69,19 @@ public class DeleteMeasurementFlowTests
         var mockDb = new Mock<IDatabaseService>();
         var mockStats = new Mock<IStatisticsService>();
         
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(It.IsAny<int>()))
+        mockDb.Setup(x => x.RemoveMeasurementAsync(It.IsAny<int>()))
             .Callback<int>(id => entries.RemoveAll(e => e.Id == id))
             .ReturnsAsync(1);
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.ToList());
         
         mockStats.Setup(x => x.GetCurrentWeightAsync())
             .ReturnsAsync(() => entries.Any() ? entries.First().WeightKg : (double?)null);
         
         // Act - Delete the only entry
-        await mockDb.Object.DeleteWeightEntryAsync(1);
-        var remainingEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        await mockDb.Object.RemoveMeasurementAsync(1);
+        var remainingEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         var currentWeight = await mockStats.Object.GetCurrentWeightAsync();
         
         // Assert - Verify empty state
@@ -103,11 +103,11 @@ public class DeleteMeasurementFlowTests
         var mockDb = new Mock<IDatabaseService>();
         var mockStats = new Mock<IStatisticsService>();
         
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(It.IsAny<int>()))
+        mockDb.Setup(x => x.RemoveMeasurementAsync(It.IsAny<int>()))
             .Callback<int>(id => entries.RemoveAll(e => e.Id == id))
             .ReturnsAsync(1);
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.OrderByDescending(e => e.Date).ToList());
         
         // Statistics service calculations
@@ -129,7 +129,7 @@ public class DeleteMeasurementFlowTests
             });
         
         // Act - Delete middle entry
-        await mockDb.Object.DeleteWeightEntryAsync(2);
+        await mockDb.Object.RemoveMeasurementAsync(2);
         
         var currentWeight = await mockStats.Object.GetCurrentWeightAsync();
         var startingWeight = await mockStats.Object.GetStartingWeightAsync();
@@ -153,15 +153,15 @@ public class DeleteMeasurementFlowTests
         
         var mockDb = new Mock<IDatabaseService>();
         
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(999))
+        mockDb.Setup(x => x.RemoveMeasurementAsync(999))
             .ReturnsAsync(0); // 0 rows affected
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.ToList());
         
         // Act - Try to delete non-existent entry
-        var result = await mockDb.Object.DeleteWeightEntryAsync(999);
-        var remainingEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var result = await mockDb.Object.RemoveMeasurementAsync(999);
+        var remainingEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         
         // Assert - Verify nothing changed
         Assert.Equal(0, result);
@@ -184,18 +184,18 @@ public class DeleteMeasurementFlowTests
         
         var mockDb = new Mock<IDatabaseService>();
         
-        mockDb.Setup(x => x.DeleteWeightEntryAsync(It.IsAny<int>()))
+        mockDb.Setup(x => x.RemoveMeasurementAsync(It.IsAny<int>()))
             .Callback<int>(id => entries.RemoveAll(e => e.Id == id))
             .ReturnsAsync(1);
         
-        mockDb.Setup(x => x.GetAllWeightEntriesAsync())
+        mockDb.Setup(x => x.GetMeasurementHistoryAsync())
             .ReturnsAsync(() => entries.OrderByDescending(e => e.Date).ToList());
         
         // Act - Delete multiple entries
-        await mockDb.Object.DeleteWeightEntryAsync(2);
-        await mockDb.Object.DeleteWeightEntryAsync(4);
+        await mockDb.Object.RemoveMeasurementAsync(2);
+        await mockDb.Object.RemoveMeasurementAsync(4);
         
-        var remainingEntries = await mockDb.Object.GetAllWeightEntriesAsync();
+        var remainingEntries = await mockDb.Object.GetMeasurementHistoryAsync();
         
         // Assert - Verify correct entries remain
         Assert.Equal(3, remainingEntries.Count);
@@ -204,6 +204,6 @@ public class DeleteMeasurementFlowTests
         Assert.Equal(1, remainingEntries[2].Id); // Oldest
         
         // Verify deletion count
-        mockDb.Verify(x => x.DeleteWeightEntryAsync(It.IsAny<int>()), Times.Exactly(2));
+        mockDb.Verify(x => x.RemoveMeasurementAsync(It.IsAny<int>()), Times.Exactly(2));
     }
 }

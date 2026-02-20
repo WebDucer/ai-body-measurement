@@ -60,9 +60,9 @@ public class DatabaseService : IDatabaseService
     }
 
     /// <summary>
-    /// Inserts a new weight entry into the database
+    /// Records a new measurement in the database
     /// </summary>
-    public async Task<int> InsertWeightEntryAsync(WeightEntry entry)
+    public async Task<int> RecordMeasurementAsync(WeightEntry entry)
     {
         await EnsureInitializedAsync();
 
@@ -78,14 +78,14 @@ public class DatabaseService : IDatabaseService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException("Failed to insert weight entry", ex);
+            throw new InvalidOperationException("Failed to record measurement", ex);
         }
     }
 
     /// <summary>
-    /// Gets all weight entries sorted by date descending (most recent first)
+    /// Gets the full measurement history sorted by date descending (most recent first)
     /// </summary>
-    public async Task<List<WeightEntry>> GetAllWeightEntriesAsync()
+    public async Task<List<WeightEntry>> GetMeasurementHistoryAsync()
     {
         await EnsureInitializedAsync();
 
@@ -97,14 +97,14 @@ public class DatabaseService : IDatabaseService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException("Failed to retrieve weight entries", ex);
+            throw new InvalidOperationException("Failed to retrieve measurement history", ex);
         }
     }
 
     /// <summary>
-    /// Gets a weight entry by its ID
+    /// Finds a measurement by its ID
     /// </summary>
-    public async Task<WeightEntry?> GetWeightEntryByIdAsync(int id)
+    public async Task<WeightEntry?> FindMeasurementAsync(int id)
     {
         await EnsureInitializedAsync();
 
@@ -116,14 +116,14 @@ public class DatabaseService : IDatabaseService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to retrieve weight entry with ID {id}", ex);
+            throw new InvalidOperationException($"Failed to find measurement with ID {id}", ex);
         }
     }
 
     /// <summary>
-    /// Updates an existing weight entry
+    /// Updates an existing measurement
     /// </summary>
-    public async Task<int> UpdateWeightEntryAsync(WeightEntry entry)
+    public async Task<int> UpdateMeasurementAsync(WeightEntry entry)
     {
         await EnsureInitializedAsync();
 
@@ -133,14 +133,14 @@ public class DatabaseService : IDatabaseService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to update weight entry with ID {entry.Id}", ex);
+            throw new InvalidOperationException($"Failed to update measurement with ID {entry.Id}", ex);
         }
     }
 
     /// <summary>
-    /// Deletes a weight entry
+    /// Removes a measurement
     /// </summary>
-    public async Task<int> DeleteWeightEntryAsync(int id)
+    public async Task<int> RemoveMeasurementAsync(int id)
     {
         await EnsureInitializedAsync();
 
@@ -150,14 +150,14 @@ public class DatabaseService : IDatabaseService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to delete weight entry with ID {id}", ex);
+            throw new InvalidOperationException($"Failed to remove measurement with ID {id}", ex);
         }
     }
 
     /// <summary>
-    /// Gets weight entries within a date range
+    /// Gets measurements within a date range
     /// </summary>
-    public async Task<List<WeightEntry>> GetWeightEntriesInDateRangeAsync(DateTime startDate, DateTime endDate)
+    public async Task<List<WeightEntry>> GetMeasurementsInPeriodAsync(DateTime startDate, DateTime endDate)
     {
         await EnsureInitializedAsync();
 
@@ -170,7 +170,7 @@ public class DatabaseService : IDatabaseService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to retrieve weight entries between {startDate:d} and {endDate:d}", ex);
+            throw new InvalidOperationException($"Failed to retrieve measurements between {startDate:d} and {endDate:d}", ex);
         }
     }
 }

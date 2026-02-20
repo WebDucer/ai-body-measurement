@@ -270,6 +270,56 @@
     <value>No</value>
   </data>
   
+  <!-- Dialog Titles and Messages -->
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirm Delete</value>
+  </data>
+  <data name="ConfirmDeleteMessage" xml:space="preserve">
+    <value>Are you sure you want to delete this measurement?</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorDeleteMeasurement" xml:space="preserve">
+    <value>Failed to delete measurement</value>
+  </data>
+  <data name="ValidationDateNotFuture" xml:space="preserve">
+    <value>Date cannot be in the future</value>
+  </data>
+  <data name="ErrorSaveMeasurement" xml:space="preserve">
+    <value>Failed to save measurement</value>
+  </data>
+  <data name="LanguageChangedTitle" xml:space="preserve">
+    <value>Language Changed</value>
+  </data>
+  <data name="LanguageChangedMessage" xml:space="preserve">
+    <value>The app needs to restart to apply the language change. Restart now?</value>
+  </data>
+  <data name="NoDataTitle" xml:space="preserve">
+    <value>No Data</value>
+  </data>
+  <data name="NoDataExportMessage" xml:space="preserve">
+    <value>No measurements to export</value>
+  </data>
+  <data name="ExportSuccessTitle" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="ExportSuccessMessage" xml:space="preserve">
+    <value>Data exported successfully</value>
+  </data>
+  <data name="ErrorExportData" xml:space="preserve">
+    <value>Failed to export data</value>
+  </data>
+  <data name="EmptyMeasurements" xml:space="preserve">
+    <value>No measurements yet. Tap + to add your first entry.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  
   <!-- CSV Export Headers -->
   <data name="CSVHeaderDate" xml:space="preserve">
     <value>Date</value>

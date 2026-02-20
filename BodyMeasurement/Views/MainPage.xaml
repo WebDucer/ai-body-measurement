@@ -9,8 +9,11 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{x:Static resources:Strings.AddWeightButton}"
-                     Command="{Binding NavigateToAddWeightCommand}"
-                     IconImageSource="{FontImage Glyph='+', Color=White, Size=22}" />
+                     Command="{Binding NavigateToAddWeightCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="+" Color="White" Size="22" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <Grid RowDefinitions="Auto,*">
@@ -85,7 +88,7 @@
                      Command="{Binding LoadWeightEntriesCommand}">
             
             <CollectionView ItemsSource="{Binding WeightEntries}"
-                           EmptyView="No measurements yet. Tap + to add your first entry."
+                           EmptyView="{x:Static resources:Strings.EmptyMeasurements}"
                            SelectionMode="None">
                 
                 <CollectionView.ItemTemplate>
@@ -93,14 +96,14 @@
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Edit"
+                                     <SwipeItem Text="{x:Static resources:Strings.Edit}"
                                               BackgroundColor="#2196F3"
                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=NavigateToEditWeightCommand}"
                                               CommandParameter="{Binding Id}" />
-                                    <SwipeItem Text="Delete"
-                                              BackgroundColor="#F44336"
-                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=DeleteWeightEntryCommand}"
-                                              CommandParameter="{Binding Id}" />
+                                     <SwipeItem Text="{x:Static resources:Strings.Delete}"
+                                               BackgroundColor="#F44336"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainViewModel}}, Path=DeleteWeightEntryCommand}"
+                                               CommandParameter="{Binding Id}" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
 
@@ -145,7 +148,8 @@
         <!-- Floating Action Button -->
         <Button Grid.Row="1"
                 Text="+"
-                FontSize="32"
+                FontSize="28"
+                Padding="0"
                 Command="{Binding NavigateToAddWeightCommand}"
                 WidthRequest="60"
                 HeightRequest="60"

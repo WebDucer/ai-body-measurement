@@ -12,6 +12,7 @@ public class AddEditWeightViewModelTests
         // Arrange
         var mockDb = new Mock<IDatabaseService>();
         var mockSettings = new Mock<ISettingsService>();
+        var mockNav = new Mock<INavigationService>();
         mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
 
         // Act - Verify services can be injected
@@ -20,6 +21,7 @@ public class AddEditWeightViewModelTests
         // Assert
         Assert.NotNull(mockDb.Object);
         Assert.NotNull(mockSettings.Object);
+        Assert.NotNull(mockNav.Object);
     }
 
     [Fact]
@@ -37,11 +39,11 @@ public class AddEditWeightViewModelTests
             Notes = "Test note"
         };
 
-        mockDb.Setup(x => x.GetWeightEntryByIdAsync(1)).ReturnsAsync(entry);
+        mockDb.Setup(x => x.FindMeasurementAsync(1)).ReturnsAsync(entry);
         mockSettings.Setup(s => s.PreferredUnit).Returns("kg");
 
         // Act
-        var loadedEntry = await mockDb.Object.GetWeightEntryByIdAsync(1);
+        var loadedEntry = await mockDb.Object.FindMeasurementAsync(1);
 
         // Assert
         Assert.NotNull(loadedEntry);
@@ -61,14 +63,14 @@ public class AddEditWeightViewModelTests
             Notes = "New entry"
         };
 
-        mockDb.Setup(x => x.InsertWeightEntryAsync(It.IsAny<WeightEntry>()))
+        mockDb.Setup(x => x.RecordMeasurementAsync(It.IsAny<WeightEntry>()))
               .ReturnsAsync(1);
 
         // Act
-        await mockDb.Object.InsertWeightEntryAsync(entry);
+        await mockDb.Object.RecordMeasurementAsync(entry);
 
         // Assert
-        mockDb.Verify(x => x.InsertWeightEntryAsync(It.IsAny<WeightEntry>()), Times.Once);
+        mockDb.Verify(x => x.RecordMeasurementAsync(It.IsAny<WeightEntry>()), Times.Once);
     }
 
     [Fact]
@@ -84,17 +86,17 @@ public class AddEditWeightViewModelTests
             Notes = "Updated entry"
         };
 
-        mockDb.Setup(x => x.GetWeightEntryByIdAsync(1)).ReturnsAsync(entry);
-        mockDb.Setup(x => x.UpdateWeightEntryAsync(It.IsAny<WeightEntry>()))
+        mockDb.Setup(x => x.FindMeasurementAsync(1)).ReturnsAsync(entry);
+        mockDb.Setup(x => x.UpdateMeasurementAsync(It.IsAny<WeightEntry>()))
               .ReturnsAsync(1);
 
         // Act
-        var loadedEntry = await mockDb.Object.GetWeightEntryByIdAsync(1);
+        var loadedEntry = await mockDb.Object.FindMeasurementAsync(1);
         loadedEntry!.WeightKg = 76.0;
-        await mockDb.Object.UpdateWeightEntryAsync(loadedEntry);
+        await mockDb.Object.UpdateMeasurementAsync(loadedEntry);
 
         // Assert
-        mockDb.Verify(x => x.UpdateWeightEntryAsync(It.IsAny<WeightEntry>()), Times.Once);
+        mockDb.Verify(x => x.UpdateMeasurementAsync(It.IsAny<WeightEntry>()), Times.Once);
     }
 
     [Fact]

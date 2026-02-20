@@ -12,14 +12,17 @@
       "enabled": true
     }
   },
-  "agent": {
-    "build": {
-      "mode": "primary",
-      "model": "opencode/claude-sonnet-4-5"
-    },
-    "plan": {
-      "mode": "primary",
-      "model": "opencode/claude-sonnet-4-5"
-    }
+  "provider": {
+    "opencode": {
+      "models": {
+        "claude-sonnet-4-6": {
+          "limit": {
+            "input": 200000,
+            "context": 200000,
+            "output": 64000
+          }
+        }
+      }
+    } 
   }
 }
