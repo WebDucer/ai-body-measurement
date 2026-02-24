@@ -30,7 +30,7 @@ public partial class AddEditWeightViewModel : ObservableObject, IQueryAttributab
     private bool _isEditMode;
 
     [ObservableProperty]
-    private string _title = "Add Weight";
+    private string _title;
 
     [ObservableProperty]
     private string _preferredUnit = "kg";
@@ -55,6 +55,7 @@ public partial class AddEditWeightViewModel : ObservableObject, IQueryAttributab
         _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
+        _title = Strings.AddWeightTitle;
     }
 
     /// <summary>

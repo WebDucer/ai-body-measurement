@@ -226,6 +226,18 @@
   <data name="OnboardingFeaturesMessage" xml:space="preserve">
     <value>Record weight, view charts, track progress, and export your data</value>
   </data>
+  <data name="OnboardingFeatureRecord" xml:space="preserve">
+    <value>Record weight measurements</value>
+  </data>
+  <data name="OnboardingFeatureCharts" xml:space="preserve">
+    <value>View charts and trends</value>
+  </data>
+  <data name="OnboardingFeatureProgress" xml:space="preserve">
+    <value>Track your progress</value>
+  </data>
+  <data name="OnboardingFeatureExport" xml:space="preserve">
+    <value>Export your data</value>
+  </data>
   <data name="OnboardingUnitTitle" xml:space="preserve">
     <value>Choose Unit</value>
   </data>
@@ -335,5 +347,94 @@
   </data>
   <data name="CSVHeaderNotes" xml:space="preserve">
     <value>Notes</value>
+  </data>
+  
+  <!-- Statistics Page Extended -->
+  <data name="TotalMeasurements" xml:space="preserve">
+    <value>Total Measurements</value>
+  </data>
+  <data name="FirstMeasurement" xml:space="preserve">
+    <value>First Measurement</value>
+  </data>
+  <data name="LastMeasurement" xml:space="preserve">
+    <value>Last Measurement</value>
+  </data>
+  <data name="TrendLosing" xml:space="preserve">
+    <value>Losing weight</value>
+  </data>
+  <data name="TrendGaining" xml:space="preserve">
+    <value>Gaining weight</value>
+  </data>
+  <data name="TrendMaintaining" xml:space="preserve">
+    <value>Maintaining weight</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  
+  <!-- Chart Page -->
+  <data name="Filter1W" xml:space="preserve">
+    <value>1W</value>
+  </data>
+  <data name="Filter1M" xml:space="preserve">
+    <value>1M</value>
+  </data>
+  <data name="Filter3M" xml:space="preserve">
+    <value>3M</value>
+  </data>
+  <data name="Filter6M" xml:space="preserve">
+    <value>6M</value>
+  </data>
+  <data name="StatMin" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StatAvg" xml:space="preserve">
+    <value>Avg</value>
+  </data>
+  <data name="StatMax" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="ChartAddMoreMeasurements" xml:space="preserve">
+    <value>Add weight measurements to see your progress chart.</value>
+  </data>
+  
+  <!-- Add/Edit Weight Page -->
+  <data name="WeightPlaceholder" xml:space="preserve">
+    <value>Enter weight</value>
+  </data>
+  <data name="NotesOptional" xml:space="preserve">
+    <value>Notes (Optional)</value>
+  </data>
+  
+  <!-- Period Labels -->
+  <data name="PeriodLabel7Days" xml:space="preserve">
+    <value>7 Days</value>
+  </data>
+  <data name="PeriodLabel30Days" xml:space="preserve">
+    <value>30 Days</value>
+  </data>
+  <data name="PeriodLabel90Days" xml:space="preserve">
+    <value>90 Days</value>
+  </data>
+  <data name="PeriodLabelAllTime" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="PeriodLabel1Week" xml:space="preserve">
+    <value>1 Week</value>
+  </data>
+  <data name="PeriodLabel1Month" xml:space="preserve">
+    <value>1 Month</value>
+  </data>
+  <data name="PeriodLabel3Months" xml:space="preserve">
+    <value>3 Months</value>
+  </data>
+  <data name="PeriodLabel6Months" xml:space="preserve">
+    <value>6 Months</value>
+  </data>
+  <data name="StatisticsNotEnoughData" xml:space="preserve">
+    <value>Not enough data for statistics.</value>
+  </data>
+  <data name="StatisticsAddMoreMeasurements" xml:space="preserve">
+    <value>Add more weight measurements to see your progress.</value>
   </data>
 </root>

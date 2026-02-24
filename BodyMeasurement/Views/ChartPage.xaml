@@ -16,46 +16,46 @@
                Padding="8"
                Margin="16,16,16,8">
             <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                <Button Text="1W"
-                       Command="{Binding ChangeFilterCommand}"
-                       CommandParameter="1 Week"
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                       CornerRadius="4"
-                       Padding="12,6"
-                       MinimumWidthRequest="60" />
-                <Button Text="1M"
-                       Command="{Binding ChangeFilterCommand}"
-                       CommandParameter="1 Month"
-                       BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
-                       TextColor="White"
-                       CornerRadius="4"
-                       Padding="12,6"
-                       MinimumWidthRequest="60" />
-                <Button Text="3M"
-                       Command="{Binding ChangeFilterCommand}"
-                       CommandParameter="3 Months"
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                       CornerRadius="4"
-                       Padding="12,6"
-                       MinimumWidthRequest="60" />
-                <Button Text="6M"
-                       Command="{Binding ChangeFilterCommand}"
-                       CommandParameter="6 Months"
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                       CornerRadius="4"
-                       Padding="12,6"
-                       MinimumWidthRequest="60" />
-                <Button Text="All"
-                       Command="{Binding ChangeFilterCommand}"
-                       CommandParameter="All"
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                       CornerRadius="4"
-                       Padding="12,6"
-                       MinimumWidthRequest="60" />
+                <Button Text="{x:Static resources:Strings.Filter1W}"
+                        Command="{Binding ChangeFilterCommand}"
+                        CommandParameter="{x:Static resources:Strings.PeriodLabel1Week}"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        CornerRadius="4"
+                        Padding="12,6"
+                        MinimumWidthRequest="60" />
+                <Button Text="{x:Static resources:Strings.Filter1M}"
+                        Command="{Binding ChangeFilterCommand}"
+                        CommandParameter="{x:Static resources:Strings.PeriodLabel1Month}"
+                        BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                        TextColor="White"
+                        CornerRadius="4"
+                        Padding="12,6"
+                        MinimumWidthRequest="60" />
+                <Button Text="{x:Static resources:Strings.Filter3M}"
+                        Command="{Binding ChangeFilterCommand}"
+                        CommandParameter="{x:Static resources:Strings.PeriodLabel3Months}"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        CornerRadius="4"
+                        Padding="12,6"
+                        MinimumWidthRequest="60" />
+                <Button Text="{x:Static resources:Strings.Filter6M}"
+                        Command="{Binding ChangeFilterCommand}"
+                        CommandParameter="{x:Static resources:Strings.PeriodLabel6Months}"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        CornerRadius="4"
+                        Padding="12,6"
+                        MinimumWidthRequest="60" />
+                <Button Text="{x:Static resources:Strings.FilterAll}"
+                        Command="{Binding ChangeFilterCommand}"
+                        CommandParameter="{x:Static resources:Strings.PeriodLabelAllTime}"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                        CornerRadius="4"
+                        Padding="12,6"
+                        MinimumWidthRequest="60" />
             </HorizontalStackLayout>
         </Border>
 
@@ -107,7 +107,7 @@
                    Padding="16,8">
                 <HorizontalStackLayout Spacing="20">
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Min"
+                        <Label Text="{x:Static resources:Strings.StatMin}"
                                FontSize="12"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
                                HorizontalOptions="Center" />
@@ -122,7 +122,7 @@
                         </Label>
                     </VerticalStackLayout>
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Avg"
+                        <Label Text="{x:Static resources:Strings.StatAvg}"
                                FontSize="12"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
                                HorizontalOptions="Center" />
@@ -137,7 +137,7 @@
                         </Label>
                     </VerticalStackLayout>
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Max"
+                        <Label Text="{x:Static resources:Strings.StatMax}"
                                FontSize="12"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
                                HorizontalOptions="Center" />
@@ -159,11 +159,11 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"
                                 Padding="32">
-                <Label Text="No data to display"
+                <Label Text="{x:Static resources:Strings.NoChartData}"
                        FontSize="18"
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center" />
-                <Label Text="Add weight measurements to see your progress chart."
+                <Label Text="{x:Static resources:Strings.ChartAddMoreMeasurements}"
                        FontSize="14"
                        HorizontalTextAlignment="Center"
                        TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"

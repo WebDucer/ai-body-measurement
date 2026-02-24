@@ -1,3 +1,4 @@
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.Views;
@@ -36,7 +37,7 @@ public partial class OnboardingPage : ContentPage
 	{
 		var subtitleLabel = new Label
 		{
-			Text = "Track your weight easily and privately with Body Measurement",
+			Text = Strings.OnboardingWelcomeMessage,
 			FontSize = 16,
 			HorizontalTextAlignment = TextAlignment.Center
 		};
@@ -57,7 +58,7 @@ public partial class OnboardingPage : ContentPage
 				},
 				new Label
 				{
-					Text = "Welcome",
+					Text = Strings.OnboardingWelcomeTitle,
 					FontSize = 32,
 					FontAttributes = FontAttributes.Bold,
 					HorizontalTextAlignment = TextAlignment.Center
@@ -84,7 +85,7 @@ public partial class OnboardingPage : ContentPage
 				},
 				new Label
 				{
-					Text = "Features",
+					Text = Strings.OnboardingFeaturesTitle,
 					FontSize = 32,
 					FontAttributes = FontAttributes.Bold,
 					HorizontalTextAlignment = TextAlignment.Center
@@ -94,10 +95,10 @@ public partial class OnboardingPage : ContentPage
 					Spacing = 12,
 					Children =
 					{
-						new Label { Text = "📝 Record weight measurements", FontSize = 16, HorizontalTextAlignment = TextAlignment.Center },
-						new Label { Text = "📊 View charts and trends", FontSize = 16, HorizontalTextAlignment = TextAlignment.Center },
-						new Label { Text = "📈 Track your progress", FontSize = 16, HorizontalTextAlignment = TextAlignment.Center },
-						new Label { Text = "💾 Export your data", FontSize = 16, HorizontalTextAlignment = TextAlignment.Center }
+						new Label { Text = "📝 " + Strings.OnboardingFeatureRecord, FontSize = 16, HorizontalTextAlignment = TextAlignment.Center },
+						new Label { Text = "📊 " + Strings.OnboardingFeatureCharts, FontSize = 16, HorizontalTextAlignment = TextAlignment.Center },
+						new Label { Text = "📈 " + Strings.OnboardingFeatureProgress, FontSize = 16, HorizontalTextAlignment = TextAlignment.Center },
+						new Label { Text = "💾 " + Strings.OnboardingFeatureExport, FontSize = 16, HorizontalTextAlignment = TextAlignment.Center }
 					}
 				}
 			}
@@ -108,7 +109,7 @@ public partial class OnboardingPage : ContentPage
 	{
 		var kgButton = new Button
 		{
-			Text = "Kilograms (kg)",
+			Text = Strings.UnitKg,
 			TextColor = Colors.White,
 			WidthRequest = 200
 		};
@@ -117,7 +118,7 @@ public partial class OnboardingPage : ContentPage
 
 		var lbsButton = new Button
 		{
-			Text = "Pounds (lbs)",
+			Text = Strings.UnitLbs,
 			TextColor = Colors.White,
 			WidthRequest = 200
 		};
@@ -126,7 +127,7 @@ public partial class OnboardingPage : ContentPage
 
 		var subtitleLabel = new Label
 		{
-			Text = "Select your preferred weight unit",
+			Text = Strings.OnboardingUnitMessage,
 			FontSize = 16,
 			HorizontalTextAlignment = TextAlignment.Center,
 			Margin = new Thickness(0, 0, 0, 16)
@@ -148,7 +149,7 @@ public partial class OnboardingPage : ContentPage
 				},
 				new Label
 				{
-					Text = "Choose Your Unit",
+					Text = Strings.OnboardingUnitTitle,
 					FontSize = 32,
 					FontAttributes = FontAttributes.Bold,
 					HorizontalTextAlignment = TextAlignment.Center
@@ -171,11 +172,11 @@ public partial class OnboardingPage : ContentPage
 		// Update button text on last screen
 		if (_currentPosition == 2) // Last screen (0-indexed)
 		{
-			BtnNext.Text = "Done";
+			BtnNext.Text = Strings.OnboardingDone;
 		}
 		else
 		{
-			BtnNext.Text = "Next";
+			BtnNext.Text = Strings.OnboardingNext;
 		}
 	}
 

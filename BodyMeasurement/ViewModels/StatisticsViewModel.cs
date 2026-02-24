@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.ViewModels;
@@ -19,7 +20,7 @@ public partial class StatisticsViewModel : ObservableObject
     private Statistics? _statistics;
 
     [ObservableProperty]
-    private string _selectedPeriod = "All";
+    private string _selectedPeriod;
 
     [ObservableProperty]
     private bool _isLoading;
@@ -40,6 +41,7 @@ public partial class StatisticsViewModel : ObservableObject
         _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
+        _selectedPeriod = Strings.PeriodLabelAllTime;
     }
 
     /// <summary>
@@ -52,14 +54,15 @@ public partial class StatisticsViewModel : ObservableObject
         {
             IsLoading = true;
 
-            int? periodDays = SelectedPeriod switch
-            {
-                "7 Days" => 7,
-                "30 Days" => 30,
-                "90 Days" => 90,
-                "All" => null,
-                _ => null
-            };
+            int? periodDays = null;
+            if (SelectedPeriod == Strings.PeriodLabel7Days)
+                periodDays = 7;
+            else if (SelectedPeriod == Strings.PeriodLabel30Days)
+                periodDays = 30;
+            else if (SelectedPeriod == Strings.PeriodLabel90Days)
+                periodDays = 90;
+            else if (SelectedPeriod == Strings.PeriodLabelAllTime)
+                periodDays = null;
 
             Statistics = await _statisticsService.GetStatisticsAsync(periodDays);
             HasData = Statistics?.TotalMeasurements > 0;
@@ -119,13 +122,13 @@ public partial class StatisticsViewModel : ObservableObject
     public string GetTrendText()
     {
         if (Statistics?.WeightChangeKg == null)
-            return "No data";
+            return Strings.NoData;
 
         if (Statistics.WeightChangeKg < -0.5)
-            return "Losing weight";
+            return Strings.TrendLosing;
         else if (Statistics.WeightChangeKg > 0.5)
-            return "Gaining weight";
+            return Strings.TrendGaining;
         else
-            return "Maintaining weight";
+            return Strings.TrendMaintaining;
     }
 }

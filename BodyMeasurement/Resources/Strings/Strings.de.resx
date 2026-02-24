@@ -226,6 +226,18 @@
   <data name="OnboardingFeaturesMessage" xml:space="preserve">
     <value>Gewicht erfassen, Diagramme anzeigen, Fortschritt verfolgen und Daten exportieren</value>
   </data>
+  <data name="OnboardingFeatureRecord" xml:space="preserve">
+    <value>Gewichtsmessungen erfassen</value>
+  </data>
+  <data name="OnboardingFeatureCharts" xml:space="preserve">
+    <value>Diagramme und Trends anzeigen</value>
+  </data>
+  <data name="OnboardingFeatureProgress" xml:space="preserve">
+    <value>Fortschritt verfolgen</value>
+  </data>
+  <data name="OnboardingFeatureExport" xml:space="preserve">
+    <value>Daten exportieren</value>
+  </data>
   <data name="OnboardingUnitTitle" xml:space="preserve">
     <value>Einheit wählen</value>
   </data>
@@ -335,5 +347,94 @@
   </data>
   <data name="CSVHeaderNotes" xml:space="preserve">
     <value>Notizen</value>
+  </data>
+  
+  <!-- Statistics Page Extended -->
+  <data name="TotalMeasurements" xml:space="preserve">
+    <value>Gesamtmessungen</value>
+  </data>
+  <data name="FirstMeasurement" xml:space="preserve">
+    <value>Erste Messung</value>
+  </data>
+  <data name="LastMeasurement" xml:space="preserve">
+    <value>Letzte Messung</value>
+  </data>
+  <data name="TrendLosing" xml:space="preserve">
+    <value>Gewicht verlieren</value>
+  </data>
+  <data name="TrendGaining" xml:space="preserve">
+    <value>Gewicht zunehmen</value>
+  </data>
+  <data name="TrendMaintaining" xml:space="preserve">
+    <value>Gewicht halten</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>Keine Daten</value>
+  </data>
+  
+  <!-- Chart Page -->
+  <data name="Filter1W" xml:space="preserve">
+    <value>1W</value>
+  </data>
+  <data name="Filter1M" xml:space="preserve">
+    <value>1M</value>
+  </data>
+  <data name="Filter3M" xml:space="preserve">
+    <value>3M</value>
+  </data>
+  <data name="Filter6M" xml:space="preserve">
+    <value>6M</value>
+  </data>
+  <data name="StatMin" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="StatAvg" xml:space="preserve">
+    <value>Ø</value>
+  </data>
+  <data name="StatMax" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="ChartAddMoreMeasurements" xml:space="preserve">
+    <value>Fügen Sie Gewichtsmessungen hinzu, um Ihr Fortschrittsdiagramm zu sehen.</value>
+  </data>
+  
+  <!-- Add/Edit Weight Page -->
+  <data name="WeightPlaceholder" xml:space="preserve">
+    <value>Gewicht eingeben</value>
+  </data>
+  <data name="NotesOptional" xml:space="preserve">
+    <value>Notizen (Optional)</value>
+  </data>
+  
+  <!-- Period Labels -->
+  <data name="PeriodLabel7Days" xml:space="preserve">
+    <value>7 Tage</value>
+  </data>
+  <data name="PeriodLabel30Days" xml:space="preserve">
+    <value>30 Tage</value>
+  </data>
+  <data name="PeriodLabel90Days" xml:space="preserve">
+    <value>90 Tage</value>
+  </data>
+  <data name="PeriodLabelAllTime" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="PeriodLabel1Week" xml:space="preserve">
+    <value>1 Woche</value>
+  </data>
+  <data name="PeriodLabel1Month" xml:space="preserve">
+    <value>1 Monat</value>
+  </data>
+  <data name="PeriodLabel3Months" xml:space="preserve">
+    <value>3 Monate</value>
+  </data>
+  <data name="PeriodLabel6Months" xml:space="preserve">
+    <value>6 Monate</value>
+  </data>
+  <data name="StatisticsNotEnoughData" xml:space="preserve">
+    <value>Nicht genügend Daten für Statistiken.</value>
+  </data>
+  <data name="StatisticsAddMoreMeasurements" xml:space="preserve">
+    <value>Fügen Sie mehr Gewichtsmessungen hinzu, um Ihren Fortschritt zu sehen.</value>
   </data>
 </root>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using BodyMeasurement.Models;
+using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
 
 namespace BodyMeasurement.ViewModels;
@@ -20,7 +21,7 @@ public partial class ChartViewModel : ObservableObject
     private ObservableCollection<WeightEntry> _chartData = new();
 
     [ObservableProperty]
-    private string _selectedFilter = "1 Month";
+    private string _selectedFilter;
 
     [ObservableProperty]
     private bool _isLoading;
@@ -50,6 +51,7 @@ public partial class ChartViewModel : ObservableObject
         _logger = logger;
 
         _preferredUnit = _settingsService.PreferredUnit;
+        _selectedFilter = Strings.PeriodLabel1Month;
     }
 
     /// <summary>
@@ -70,18 +72,23 @@ public partial class ChartViewModel : ObservableObject
             await Task.Delay(50);
 
             var endDate = DateTime.Today;
-            var startDate = SelectedFilter switch
-            {
-                "1 Week" => endDate.AddDays(-7),
-                "1 Month" => endDate.AddDays(-30),
-                "3 Months" => endDate.AddDays(-90),
-                "6 Months" => endDate.AddDays(-180),
-                "All" => DateTime.MinValue,
-                _ => endDate.AddDays(-30)
-            };
+            DateTime startDate;
+            
+            if (SelectedFilter == Strings.PeriodLabel1Week)
+                startDate = endDate.AddDays(-7);
+            else if (SelectedFilter == Strings.PeriodLabel1Month)
+                startDate = endDate.AddDays(-30);
+            else if (SelectedFilter == Strings.PeriodLabel3Months)
+                startDate = endDate.AddDays(-90);
+            else if (SelectedFilter == Strings.PeriodLabel6Months)
+                startDate = endDate.AddDays(-180);
+            else if (SelectedFilter == Strings.PeriodLabelAllTime)
+                startDate = DateTime.MinValue;
+            else
+                startDate = endDate.AddDays(-30);
 
             List<WeightEntry> entries;
-            if (SelectedFilter == "All")
+            if (SelectedFilter == Strings.PeriodLabelAllTime)
             {
                 entries = await _databaseService.GetMeasurementHistoryAsync();
             }

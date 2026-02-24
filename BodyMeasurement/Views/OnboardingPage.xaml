@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resources="clr-namespace:BodyMeasurement.Resources.Strings"
              x:Class="BodyMeasurement.Views.OnboardingPage"
              NavigationPage.HasNavigationBar="False">
 
@@ -27,7 +28,7 @@
             <!-- Skip Button -->
             <Button Grid.Column="0"
                    x:Name="BtnSkip"
-                   Text="Skip"
+                   Text="{x:Static resources:Strings.OnboardingSkip}"
                    Clicked="OnSkipClicked"
                    BackgroundColor="Transparent"
                    TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
@@ -44,7 +45,7 @@
             <!-- Next/Done Button -->
             <Button Grid.Column="2"
                    x:Name="BtnNext"
-                   Text="Next"
+                   Text="{x:Static resources:Strings.OnboardingNext}"
                    Clicked="OnNextClicked"
                    BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
                    TextColor="White"

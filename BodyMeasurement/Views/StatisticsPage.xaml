@@ -14,34 +14,34 @@
             <Border BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#2C2C2C}"
                    Padding="8">
                 <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
-                    <Button Text="7 Days"
-                           Command="{Binding ChangePeriodCommand}"
-                           CommandParameter="7 Days"
-                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                           CornerRadius="4"
-                           Padding="12,6" />
-                    <Button Text="30 Days"
-                           Command="{Binding ChangePeriodCommand}"
-                           CommandParameter="30 Days"
-                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                           CornerRadius="4"
-                           Padding="12,6" />
-                    <Button Text="90 Days"
-                           Command="{Binding ChangePeriodCommand}"
-                           CommandParameter="90 Days"
-                           BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                           TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                           CornerRadius="4"
-                           Padding="12,6" />
-                    <Button Text="All"
-                           Command="{Binding ChangePeriodCommand}"
-                           CommandParameter="All"
-                           BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
-                           TextColor="White"
-                           CornerRadius="4"
-                           Padding="12,6" />
+                    <Button Text="{x:Static resources:Strings.PeriodLabel7Days}"
+                            Command="{Binding ChangePeriodCommand}"
+                            CommandParameter="{x:Static resources:Strings.PeriodLabel7Days}"
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            CornerRadius="4"
+                            Padding="12,6" />
+                    <Button Text="{x:Static resources:Strings.PeriodLabel30Days}"
+                            Command="{Binding ChangePeriodCommand}"
+                            CommandParameter="{x:Static resources:Strings.PeriodLabel30Days}"
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            CornerRadius="4"
+                            Padding="12,6" />
+                    <Button Text="{x:Static resources:Strings.PeriodLabel90Days}"
+                            Command="{Binding ChangePeriodCommand}"
+                            CommandParameter="{x:Static resources:Strings.PeriodLabel90Days}"
+                            BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                            CornerRadius="4"
+                            Padding="12,6" />
+                    <Button Text="{x:Static resources:Strings.PeriodLabelAllTime}"
+                            Command="{Binding ChangePeriodCommand}"
+                            CommandParameter="{x:Static resources:Strings.PeriodLabelAllTime}"
+                            BackgroundColor="{AppThemeBinding Light=#2196F3, Dark=#1976D2}"
+                            TextColor="White"
+                            CornerRadius="4"
+                            Padding="12,6" />
                 </HorizontalStackLayout>
             </Border>
 
@@ -54,7 +54,7 @@
                        StrokeThickness="1"
                        Padding="16">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="Current Weight"
+                        <Label Text="{x:Static resources:Strings.CurrentWeight}"
                                FontSize="14"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
                         <Label FontSize="32"
@@ -76,7 +76,7 @@
                        StrokeThickness="1"
                        Padding="16">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="Starting Weight"
+                        <Label Text="{x:Static resources:Strings.StartingWeight}"
                                FontSize="14"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
                         <Label FontSize="32"
@@ -98,7 +98,7 @@
                        StrokeThickness="1"
                        Padding="16">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="Weight Change"
+                        <Label Text="{x:Static resources:Strings.WeightChange}"
                                FontSize="14"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
                         <Label FontSize="32"
@@ -122,7 +122,7 @@
                        StrokeThickness="1"
                        Padding="16">
                     <VerticalStackLayout Spacing="8">
-                        <Label Text="Total Measurements"
+                        <Label Text="{x:Static resources:Strings.TotalMeasurements}"
                                FontSize="14"
                                TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
                         <Label Text="{Binding Statistics.TotalMeasurements}"
@@ -138,7 +138,7 @@
                        Padding="16">
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
                         <VerticalStackLayout Grid.Column="0" Spacing="8">
-                            <Label Text="First Measurement"
+                            <Label Text="{x:Static resources:Strings.FirstMeasurement}"
                                    FontSize="14"
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
                             <Label Text="{Binding Statistics.FirstMeasurementDate, StringFormat='{0:MMM dd, yyyy}'}"
@@ -146,7 +146,7 @@
                                    FontAttributes="Bold" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Spacing="8">
-                            <Label Text="Last Measurement"
+                            <Label Text="{x:Static resources:Strings.LastMeasurement}"
                                    FontSize="14"
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
                             <Label Text="{Binding Statistics.LastMeasurementDate, StringFormat='{0:MMM dd, yyyy}'}"
@@ -163,11 +163,11 @@
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"
                                 Padding="32">
-                <Label Text="Not enough data for statistics."
+                <Label Text="{x:Static resources:Strings.StatisticsNotEnoughData}"
                        FontSize="16"
                        HorizontalTextAlignment="Center"
                        TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
-                <Label Text="Add more weight measurements to see your progress."
+                <Label Text="{x:Static resources:Strings.StatisticsAddMoreMeasurements}"
                        FontSize="14"
                        HorizontalTextAlignment="Center"
                        TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
