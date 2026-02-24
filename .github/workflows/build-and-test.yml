@@ -26,6 +26,9 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
         
+    - name: Install .NET MAUI workload
+      run: dotnet workload install maui-android
+      
     - name: Restore dependencies
       run: dotnet restore BodyMeasurement.Tests/BodyMeasurement.Tests.csproj
       
@@ -33,7 +36,7 @@ jobs:
       run: dotnet build BodyMeasurement.Tests/BodyMeasurement.Tests.csproj --configuration Release --no-restore
       
     - name: Run tests with coverage
-      run: dotnet test BodyMeasurement.Tests/BodyMeasurement.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      run: dotnet test BodyMeasurement.Tests/BodyMeasurement.Tests.csproj --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage /p:CollectCoverage=true /p:CoverletOutputFormat=Cobertura /p:CoverletOutput=./coverage/
       
     - name: Generate coverage report
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.2
