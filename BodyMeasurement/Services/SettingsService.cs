@@ -8,6 +8,8 @@ public class SettingsService : ISettingsService
     private const string PreferredUnitKey = "PreferredUnit";
     private const string LanguageKey = "Language";
     private const string OnboardingCompletedKey = "OnboardingCompleted";
+    private const string UserNameKey = "UserName";
+    private const string GoalWeightKgKey = "GoalWeightKg";
 
     private const string DefaultUnit = "kg";
     private const string DefaultLanguage = "en";
@@ -52,5 +54,27 @@ public class SettingsService : ISettingsService
     {
         get => Preferences.Get(OnboardingCompletedKey, false);
         set => Preferences.Set(OnboardingCompletedKey, value);
+    }
+
+    /// <summary>
+    /// Display name for the user
+    /// </summary>
+    public string UserName
+    {
+        get => Preferences.Get(UserNameKey, string.Empty);
+        set => Preferences.Set(UserNameKey, value);
+    }
+
+    /// <summary>
+    /// Goal weight in kg, or null if not set
+    /// </summary>
+    public double? GoalWeightKg
+    {
+        get
+        {
+            var val = Preferences.Get(GoalWeightKgKey, -1.0);
+            return val < 0 ? null : val;
+        }
+        set => Preferences.Set(GoalWeightKgKey, value ?? -1.0);
     }
 }

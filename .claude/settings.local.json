@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls -la)",
+      "Bash(openspec instructions *)",
+      "Bash(openspec list --json)",
+      "Bash(openspec list)",
+      "Bash(openspec status *)",
+      "Bash(dotnet build *)"
+    ]
+  }
+}
