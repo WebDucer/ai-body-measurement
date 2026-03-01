@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Graphics;
 using BodyMeasurement.Models;
 using BodyMeasurement.Resources.Strings;
 using BodyMeasurement.Services;
@@ -42,6 +43,42 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     private string _preferredUnit = "kg";
+
+    [ObservableProperty]
+    private string _userName = string.Empty;
+
+    [ObservableProperty]
+    private double? _goalWeightKg;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ProgressMarkerBounds))]
+    private double _progressValue;
+
+    [ObservableProperty]
+    private string _weightLostDisplay = "--";
+
+    [ObservableProperty]
+    private string _motivationalMessage = string.Empty;
+
+    [ObservableProperty]
+    private string _startWeightDisplay = "--";
+
+    [ObservableProperty]
+    private string _goalWeightDisplay = "--";
+
+    [ObservableProperty]
+    private string _visceralFatDisplay = "--";
+
+    [ObservableProperty]
+    private string _waterDisplay = "--";
+
+    [ObservableProperty]
+    private string _muscleDisplay = "--";
+
+    [ObservableProperty]
+    private string _bmiDisplay = "--";
+
+    public Rect ProgressMarkerBounds => new Rect(ProgressValue, 0, 4, 40);
 
     public MainViewModel(
         IDatabaseService databaseService,
@@ -92,7 +129,7 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Loads statistics data
+    /// Loads statistics data and computes home screen display values
     /// </summary>
     private async Task LoadStatisticsAsync()
     {
@@ -102,6 +139,43 @@ public partial class MainViewModel : ObservableObject
         var (absolute, percentage) = await _statisticsService.CalculateWeightChangeAsync();
         WeightChangeAbsolute = absolute;
         WeightChangePercentage = percentage;
+
+        // Load user profile from settings
+        var name = _settingsService.UserName;
+        UserName = string.IsNullOrWhiteSpace(name) ? "LemoWeight" : name;
+        GoalWeightKg = _settingsService.GoalWeightKg;
+
+        // Display strings for start/goal
+        StartWeightDisplay = StartingWeight.HasValue ? $"{StartingWeight.Value:F1} kg" : "--";
+        GoalWeightDisplay = GoalWeightKg.HasValue ? $"{GoalWeightKg.Value:F1} kg" : "--";
+
+        // Progress calculation: clamp((start - current) / (start - goal), 0, 1)
+        if (StartingWeight.HasValue && CurrentWeight.HasValue &&
+            GoalWeightKg.HasValue && StartingWeight.Value != GoalWeightKg.Value)
+        {
+            var raw = (StartingWeight.Value - CurrentWeight.Value) /
+                      (StartingWeight.Value - GoalWeightKg.Value);
+            ProgressValue = Math.Clamp(raw, 0.0, 1.0);
+        }
+        else
+        {
+            ProgressValue = 0;
+        }
+
+        // Weight lost display and motivational message
+        if (StartingWeight.HasValue && CurrentWeight.HasValue)
+        {
+            var lost = StartingWeight.Value - CurrentWeight.Value;
+            WeightLostDisplay = $"{lost:+0.0;-0.0;0} kg";
+            MotivationalMessage = lost > 0
+                ? string.Format(Strings.WeightLostFormat, lost)
+                : Strings.MotivationalKeepGoing;
+        }
+        else
+        {
+            WeightLostDisplay = "--";
+            MotivationalMessage = Strings.MotivationalKeepGoing;
+        }
     }
 
     /// <summary>
@@ -153,6 +227,15 @@ public partial class MainViewModel : ObservableObject
     }
 
     /// <summary>
+    /// Navigates to the Settings tab
+    /// </summary>
+    [RelayCommand]
+    private async Task NavigateToSettingsAsync()
+    {
+        await Shell.Current.GoToAsync("//settings");
+    }
+
+    /// <summary>
     /// Formats weight in the preferred unit
     /// </summary>
     public string FormatWeight(double weightKg)
@@ -170,10 +253,10 @@ public partial class MainViewModel : ObservableObject
 
         var sign = WeightChangeAbsolute.Value >= 0 ? "+" : "";
         var arrow = WeightChangeAbsolute.Value < 0 ? "↓" : WeightChangeAbsolute.Value > 0 ? "↑" : "";
-        
+
         var formatted = WeightConverter.Format(Math.Abs(WeightChangeAbsolute.Value), PreferredUnit);
         var percentage = WeightChangePercentage.HasValue ? $" ({sign}{WeightChangePercentage.Value:F1}%)" : "";
-        
+
         return $"{sign}{formatted}{percentage} {arrow}";
     }
 }

@@ -437,4 +437,39 @@
   <data name="StatisticsAddMoreMeasurements" xml:space="preserve">
     <value>Add more weight measurements to see your progress.</value>
   </data>
+
+  <!-- Profile and Home Screen -->
+  <data name="ProfileSection" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="UserNameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="GoalWeightLabel" xml:space="preserve">
+    <value>Goal Weight (kg)</value>
+  </data>
+  <data name="MotivationalKeepGoing" xml:space="preserve">
+    <value>Keep going, you're doing great!</value>
+  </data>
+  <data name="WeightLostFormat" xml:space="preserve">
+    <value>You've lost {0:F1} kg!</value>
+  </data>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="GoalLabel" xml:space="preserve">
+    <value>Goal</value>
+  </data>
+  <data name="VisceralFatLabel" xml:space="preserve">
+    <value>Visceral Fat</value>
+  </data>
+  <data name="WaterInBodyLabel" xml:space="preserve">
+    <value>Body Water</value>
+  </data>
+  <data name="MuscleLabel" xml:space="preserve">
+    <value>Muscle</value>
+  </data>
+  <data name="BmiLabel" xml:space="preserve">
+    <value>BMI</value>
+  </data>
 </root>

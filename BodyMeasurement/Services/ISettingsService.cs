@@ -19,4 +19,14 @@ public interface ISettingsService
     /// Whether the onboarding flow has been completed
     /// </summary>
     bool OnboardingCompleted { get; set; }
+
+    /// <summary>
+    /// Display name for the user
+    /// </summary>
+    string UserName { get; set; }
+
+    /// <summary>
+    /// Goal weight in kg, or null if not set
+    /// </summary>
+    double? GoalWeightKg { get; set; }
 }

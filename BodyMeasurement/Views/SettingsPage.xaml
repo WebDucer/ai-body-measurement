@@ -10,6 +10,31 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="24">
 
+            <!-- Profile Section -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                   Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"
+                   StrokeThickness="1"
+                   Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{x:Static resources:Strings.ProfileSection}"
+                           FontSize="16"
+                           FontAttributes="Bold" />
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{x:Static resources:Strings.UserNameLabel}" FontSize="14" />
+                        <Entry Text="{Binding UserName}"
+                               Placeholder="{x:Static resources:Strings.UserNameLabel}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{x:Static resources:Strings.GoalWeightLabel}" FontSize="14" />
+                        <Entry Text="{Binding GoalWeightKgText}"
+                               Keyboard="Numeric"
+                               Placeholder="0.0" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
             <!-- Language Setting -->
             <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                    Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#3C3C3C}"

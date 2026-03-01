@@ -27,6 +27,12 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private bool _isExporting;
 
+    [ObservableProperty]
+    private string _userName = string.Empty;
+
+    [ObservableProperty]
+    private string _goalWeightKgText = string.Empty;
+
     public SettingsViewModel(
         ISettingsService settingsService,
         IExportService exportService,
@@ -45,6 +51,8 @@ public partial class SettingsViewModel : ObservableObject
         // Load current settings
         _selectedLanguage = _settingsService.Language;
         _selectedUnit = _settingsService.PreferredUnit;
+        _userName = _settingsService.UserName;
+        _goalWeightKgText = _settingsService.GoalWeightKg?.ToString("F1") ?? string.Empty;
     }
 
     /// <summary>
@@ -87,6 +95,30 @@ public partial class SettingsViewModel : ObservableObject
     partial void OnSelectedUnitChanged(string value)
     {
         _settingsService.PreferredUnit = value;
+    }
+
+    /// <summary>
+    /// Called when user name changes — persists to settings
+    /// </summary>
+    partial void OnUserNameChanged(string value)
+    {
+        _settingsService.UserName = value;
+    }
+
+    /// <summary>
+    /// Called when goal weight text changes — parses and persists to settings
+    /// </summary>
+    partial void OnGoalWeightKgTextChanged(string value)
+    {
+        if (double.TryParse(value, System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out var weight) && weight > 0)
+        {
+            _settingsService.GoalWeightKg = weight;
+        }
+        else if (string.IsNullOrWhiteSpace(value))
+        {
+            _settingsService.GoalWeightKg = null;
+        }
     }
 
     /// <summary>
